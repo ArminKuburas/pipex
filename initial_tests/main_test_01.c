@@ -1,30 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execve_test_01.c                                   :+:      :+:    :+:   */
+/*   main_test_01.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/12 11:50:09 by akuburas          #+#    #+#             */
-/*   Updated: 2023/12/14 17:20:59 by akuburas         ###   ########.fr       */
+/*   Created: 2023/12/14 16:36:04 by akuburas          #+#    #+#             */
+/*   Updated: 2023/12/14 17:02:37 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
 
-int	main()
+int	main(int argc, char *argv[], char **env)
 {
-	const	char 	*program_path = "/bin/ls";
-	char *const		argv[] = { "ls", "-l", NULL };
-	char *const envp[] = { NULL };
+	int	i;
 
-	if (execve(program_path, argv, envp) == -1)
-	{
-		perror("execve");
-		exit(EXIT_FAILURE);
-	}
-	printf("This won't be reached!\n");
-	return (0);
+	i = 0;
+	while (env[i] != NULL)
+		printf("%s\n", env[i++]);
+	return (0); 
 }

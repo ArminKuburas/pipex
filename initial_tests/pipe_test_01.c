@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 13:47:51 by akuburas          #+#    #+#             */
-/*   Updated: 2023/12/13 14:18:46 by akuburas         ###   ########.fr       */
+/*   Updated: 2023/12/14 17:02:58 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ int	main(void)
 	else
 	{
 		close(pipe_fd[0]);
-
 		const char *message = "Hello from the parent!";
 		ssize_t bytes_written = write(pipe_fd[1], message, strlen(message));
 
@@ -58,11 +57,8 @@ int	main(void)
 			perror("write");
 			exit(EXIT_FAILURE);
 		}
-
 		close(pipe_fd[1]);
-
 		wait(NULL);
 	}
-
 	return (0);
 }
