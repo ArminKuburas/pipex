@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 13:28:10 by akuburas          #+#    #+#             */
-/*   Updated: 2023/12/18 13:29:42 by akuburas         ###   ########.fr       */
+/*   Updated: 2023/12/18 14:59:11 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ static char	*extract_word(const char *s, int *index)
 			(*index)++;
 		end = *index;
 	}
-	return (strndup(s + start, end - start));
+	return (ft_strndup(s + start, end - start));
 }
 
 char	**ft_pipex_split(const char *s)
@@ -112,4 +112,32 @@ char	**ft_pipex_split(const char *s)
 	}
 	result[count] = NULL;
 	return (result);
+}
+
+int main(void)
+{
+	char command[] = "awk '{ut += $3} {ft+= $2} END {printf(\"%.2f\", ut/ft*100)}'";
+	char **args = ft_pipex_split(command);
+
+	if (args)
+	{
+		int i = 0;
+		while (args[i])
+		{
+			printf("Token %d: %s\n", i, args[i]);
+			i++;
+		}
+		if (args[i] == NULL)
+			printf("The third token is set to NULL.\n");
+		else
+			printf("The third token is not set to NULL.\n");
+		i = 0;
+		while (args[i])
+		{
+			free(args[i]);
+			i++;
+		}
+		free(args);
+	}
+	return (0);
 }
