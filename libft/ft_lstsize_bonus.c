@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_utils.c                                      :+:      :+:    :+:   */
+/*   ft_lstsize_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/18 09:10:28 by akuburas          #+#    #+#             */
-/*   Updated: 2023/12/18 11:03:31 by akuburas         ###   ########.fr       */
+/*   Created: 2023/10/31 15:34:04 by akuburas          #+#    #+#             */
+/*   Updated: 2023/11/01 12:31:21 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-void	ft_free_substrings(char **arr_str)
+int	ft_lstsize(t_list *lst)
 {
-	int	i;
+	int		count;
+	t_list	*current;
 
-	while (arr_str[i])
+	count = 0;
+	current = lst;
+	while (current != NULL)
 	{
-		free(arr_str[i]);
-		arr_str[i] = NULL;
-		i++;
+		count++;
+		current = current->next;
 	}
-	free(arr_str);
-	arr_str = NULL;
+	return (count);
 }

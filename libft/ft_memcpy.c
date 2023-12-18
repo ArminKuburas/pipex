@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_utils.c                                      :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/18 09:10:28 by akuburas          #+#    #+#             */
-/*   Updated: 2023/12/18 11:03:31 by akuburas         ###   ########.fr       */
+/*   Created: 2023/10/25 16:26:20 by akuburas          #+#    #+#             */
+/*   Updated: 2023/10/27 11:01:11 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-void	ft_free_substrings(char **arr_str)
+void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	int	i;
+	size_t	i;
 
-	while (arr_str[i])
+	i = 0;
+	if (!dst && !src)
+		return (NULL);
+	while (i < n)
 	{
-		free(arr_str[i]);
-		arr_str[i] = NULL;
+		((unsigned char *)dst)[i] = ((unsigned char *)src)[i];
 		i++;
 	}
-	free(arr_str);
-	arr_str = NULL;
+	return (dst);
 }

@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_utils.c                                      :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/18 09:10:28 by akuburas          #+#    #+#             */
-/*   Updated: 2023/12/18 11:03:31 by akuburas         ###   ########.fr       */
+/*   Created: 2023/10/31 07:58:11 by akuburas          #+#    #+#             */
+/*   Updated: 2023/10/31 08:06:46 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-void	ft_free_substrings(char **arr_str)
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	int	i;
+	int		i;
+	char	*result;
 
-	while (arr_str[i])
+	if (!s || !f)
+		return (NULL);
+	result = (char *)malloc(ft_strlen(s) + 1);
+	if (!result)
+		return (NULL);
+	i = 0;
+	while (s[i])
 	{
-		free(arr_str[i]);
-		arr_str[i] = NULL;
+		result[i] = f(i, s[i]);
 		i++;
 	}
-	free(arr_str);
-	arr_str = NULL;
+	result[i] = '\0';
+	return (result);
 }

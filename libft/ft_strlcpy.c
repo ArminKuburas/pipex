@@ -1,27 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_utils.c                                      :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/18 09:10:28 by akuburas          #+#    #+#             */
-/*   Updated: 2023/12/18 11:03:31 by akuburas         ###   ########.fr       */
+/*   Created: 2023/10/26 10:19:57 by akuburas          #+#    #+#             */
+/*   Updated: 2023/10/26 14:49:55 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-void	ft_free_substrings(char **arr_str)
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
-	int	i;
+	size_t	src_len;
+	size_t	i;
 
-	while (arr_str[i])
+	src_len = ft_strlen(src);
+	i = 0;
+	if (dstsize > 0)
 	{
-		free(arr_str[i]);
-		arr_str[i] = NULL;
-		i++;
+		while (i < src_len && i < (dstsize - 1))
+		{
+			dst[i] = src[i];
+			i++;
+		}
+		dst[i] = '\0';
 	}
-	free(arr_str);
-	arr_str = NULL;
+	return (src_len);
 }

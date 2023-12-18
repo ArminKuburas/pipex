@@ -1,27 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_utils.c                                      :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/18 09:10:28 by akuburas          #+#    #+#             */
-/*   Updated: 2023/12/18 11:03:31 by akuburas         ###   ########.fr       */
+/*   Created: 2023/10/27 09:15:10 by akuburas          #+#    #+#             */
+/*   Updated: 2023/10/27 09:27:27 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-void	ft_free_substrings(char **arr_str)
+char	*ft_strrchr(const char *s, int c)
 {
-	int	i;
+	char	*end;
+	char	find;
+	size_t	i;
 
-	while (arr_str[i])
+	end = (char *)s;
+	find = (char)c;
+	i = ft_strlen(s);
+	while (i > 0)
 	{
-		free(arr_str[i]);
-		arr_str[i] = NULL;
-		i++;
+		if (end[i] == find)
+		{
+			return (end + i);
+		}
+		i--;
 	}
-	free(arr_str);
-	arr_str = NULL;
+	if (end [i] == find)
+		return (end);
+	return (NULL);
 }

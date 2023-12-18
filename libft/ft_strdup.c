@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_utils.c                                      :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/18 09:10:28 by akuburas          #+#    #+#             */
-/*   Updated: 2023/12/18 11:03:31 by akuburas         ###   ########.fr       */
+/*   Created: 2023/10/26 15:40:19 by akuburas          #+#    #+#             */
+/*   Updated: 2023/11/03 15:44:49 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-void	ft_free_substrings(char **arr_str)
+char	*ft_strdup(const char *s)
 {
-	int	i;
+	size_t	len;
+	char	*new_str;
 
-	while (arr_str[i])
+	len = ft_strlen(s);
+	new_str = (char *)ft_calloc(len + 1, sizeof(char));
+	if (new_str)
 	{
-		free(arr_str[i]);
-		arr_str[i] = NULL;
-		i++;
+		ft_memcpy(new_str, s, len);
 	}
-	free(arr_str);
-	arr_str = NULL;
+	return (new_str);
 }

@@ -1,27 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_utils.c                                      :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/18 09:10:28 by akuburas          #+#    #+#             */
-/*   Updated: 2023/12/18 11:03:31 by akuburas         ###   ########.fr       */
+/*   Created: 2023/10/26 10:02:09 by akuburas          #+#    #+#             */
+/*   Updated: 2023/10/27 11:28:53 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-void	ft_free_substrings(char **arr_str)
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	int	i;
+	size_t	i;
+	int		difference;
 
-	while (arr_str[i])
+	i = 0;
+	difference = 0;
+	while (i < n)
 	{
-		free(arr_str[i]);
-		arr_str[i] = NULL;
+		if (((unsigned char *)s1)[i] != ((unsigned char *)s2)[i])
+		{
+			difference = ((unsigned char *)s1)[i] - ((unsigned char *)s2)[i];
+			return (difference);
+		}
 		i++;
 	}
-	free(arr_str);
-	arr_str = NULL;
+	return (0);
 }

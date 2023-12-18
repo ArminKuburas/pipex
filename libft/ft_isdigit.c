@@ -1,27 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_utils.c                                      :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/18 09:10:28 by akuburas          #+#    #+#             */
-/*   Updated: 2023/12/18 11:03:31 by akuburas         ###   ########.fr       */
+/*   Created: 2023/10/24 16:43:56 by akuburas          #+#    #+#             */
+/*   Updated: 2023/11/02 12:56:15 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
-
-void	ft_free_substrings(char **arr_str)
+int	ft_isdigit(int c)
 {
-	int	i;
-
-	while (arr_str[i])
-	{
-		free(arr_str[i]);
-		arr_str[i] = NULL;
-		i++;
-	}
-	free(arr_str);
-	arr_str = NULL;
+	return (c >= '0' && c <= '9');
 }

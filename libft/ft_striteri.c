@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_utils.c                                      :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/18 09:10:28 by akuburas          #+#    #+#             */
-/*   Updated: 2023/12/18 11:03:31 by akuburas         ###   ########.fr       */
+/*   Created: 2023/10/31 08:45:16 by akuburas          #+#    #+#             */
+/*   Updated: 2023/10/31 08:49:24 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
-
-void	ft_free_substrings(char **arr_str)
+void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 {
-	int	i;
+	unsigned int	i;
 
-	while (arr_str[i])
+	if (!s || !f)
+		return ;
+	i = 0;
+	while (s[i])
 	{
-		free(arr_str[i]);
-		arr_str[i] = NULL;
+		f(i, &s[i]);
 		i++;
 	}
-	free(arr_str);
-	arr_str = NULL;
 }

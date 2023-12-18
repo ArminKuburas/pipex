@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_utils.c                                      :+:      :+:    :+:   */
+/*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/18 09:10:28 by akuburas          #+#    #+#             */
-/*   Updated: 2023/12/18 11:03:31 by akuburas         ###   ########.fr       */
+/*   Created: 2023/10/24 16:05:43 by akuburas          #+#    #+#             */
+/*   Updated: 2023/11/01 13:21:16 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
-
-void	ft_free_substrings(char **arr_str)
+int	ft_toupper(int c)
 {
-	int	i;
-
-	while (arr_str[i])
+	if (c >= 'a' && c <= 'z')
 	{
-		free(arr_str[i]);
-		arr_str[i] = NULL;
-		i++;
+		return (c - ('a' - 'A'));
 	}
-	free(arr_str);
-	arr_str = NULL;
+	else
+	{
+		return (c);
+	}
 }

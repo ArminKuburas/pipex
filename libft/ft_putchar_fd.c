@@ -1,27 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_utils.c                                      :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/18 09:10:28 by akuburas          #+#    #+#             */
-/*   Updated: 2023/12/18 11:03:31 by akuburas         ###   ########.fr       */
+/*   Created: 2023/10/31 08:56:53 by akuburas          #+#    #+#             */
+/*   Updated: 2023/11/03 10:26:29 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-void	ft_free_substrings(char **arr_str)
+void	ft_putchar_fd(char c, int fd)
 {
-	int	i;
-
-	while (arr_str[i])
-	{
-		free(arr_str[i]);
-		arr_str[i] = NULL;
-		i++;
-	}
-	free(arr_str);
-	arr_str = NULL;
+	write(fd, &c, 1);
 }

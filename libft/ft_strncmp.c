@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_utils.c                                      :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/18 09:10:28 by akuburas          #+#    #+#             */
-/*   Updated: 2023/12/18 11:03:31 by akuburas         ###   ########.fr       */
+/*   Created: 2023/10/25 12:38:31 by akuburas          #+#    #+#             */
+/*   Updated: 2023/10/27 11:38:57 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-void	ft_free_substrings(char **arr_str)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	int	i;
+	unsigned char	u1;
+	unsigned char	u2;
 
-	while (arr_str[i])
+	while (n > 0)
 	{
-		free(arr_str[i]);
-		arr_str[i] = NULL;
-		i++;
+		u1 = (unsigned char)*s1;
+		u2 = (unsigned char)*s2;
+		if (u1 != u2)
+			return (u1 - u2);
+		if (u1 == '\0')
+			return (0);
+		s1++;
+		s2++;
+		n--;
 	}
-	free(arr_str);
-	arr_str = NULL;
+	return (0);
 }

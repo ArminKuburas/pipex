@@ -1,27 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_utils.c                                      :+:      :+:    :+:   */
+/*   ft_lstadd_front_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/18 09:10:28 by akuburas          #+#    #+#             */
-/*   Updated: 2023/12/18 11:03:31 by akuburas         ###   ########.fr       */
+/*   Created: 2023/10/31 15:02:57 by akuburas          #+#    #+#             */
+/*   Updated: 2023/11/01 12:31:34 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-void	ft_free_substrings(char **arr_str)
+void	ft_lstadd_front(t_list **lst, t_list *new)
 {
-	int	i;
-
-	while (arr_str[i])
-	{
-		free(arr_str[i]);
-		arr_str[i] = NULL;
-		i++;
-	}
-	free(arr_str);
-	arr_str = NULL;
+	if (new == NULL)
+		return ;
+	new->next = *lst;
+	*lst = new;
 }

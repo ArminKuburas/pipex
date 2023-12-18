@@ -1,27 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_utils.c                                      :+:      :+:    :+:   */
+/*   ft_isascii.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/18 09:10:28 by akuburas          #+#    #+#             */
-/*   Updated: 2023/12/18 11:03:31 by akuburas         ###   ########.fr       */
+/*   Created: 2023/10/24 18:06:09 by akuburas          #+#    #+#             */
+/*   Updated: 2023/10/24 18:25:23 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
-
-void	ft_free_substrings(char **arr_str)
+int	ft_isascii(int c)
 {
-	int	i;
-
-	while (arr_str[i])
-	{
-		free(arr_str[i]);
-		arr_str[i] = NULL;
-		i++;
-	}
-	free(arr_str);
-	arr_str = NULL;
+	return (c >= 0 && c <= 127);
 }

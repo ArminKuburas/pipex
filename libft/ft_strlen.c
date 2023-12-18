@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_utils.c                                      :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/18 09:10:28 by akuburas          #+#    #+#             */
-/*   Updated: 2023/12/18 11:03:31 by akuburas         ###   ########.fr       */
+/*   Created: 2023/10/25 15:19:24 by akuburas          #+#    #+#             */
+/*   Updated: 2023/10/27 08:52:44 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-void	ft_free_substrings(char **arr_str)
+size_t	ft_strlen(const char *s)
 {
-	int	i;
+	size_t	len;
 
-	while (arr_str[i])
+	len = 0;
+	while (s[len] != '\0')
 	{
-		free(arr_str[i]);
-		arr_str[i] = NULL;
-		i++;
+		len++;
 	}
-	free(arr_str);
-	arr_str = NULL;
+	return (len);
 }

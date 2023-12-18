@@ -1,27 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_utils.c                                      :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/18 09:10:28 by akuburas          #+#    #+#             */
-/*   Updated: 2023/12/18 11:03:31 by akuburas         ###   ########.fr       */
+/*   Created: 2023/10/27 09:54:10 by akuburas          #+#    #+#             */
+/*   Updated: 2023/10/27 11:18:12 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-void	ft_free_substrings(char **arr_str)
+void	*ft_memmove(void *dst, const void *src, size_t len)
 {
 	int	i;
 
-	while (arr_str[i])
+	if (!dst && !src)
+		return (NULL);
+	if (dst > src)
 	{
-		free(arr_str[i]);
-		arr_str[i] = NULL;
-		i++;
+		i = (int)len - 1;
+		while (i >= 0)
+		{
+			*(char *)(dst + i) = *(char *)(src + i);
+			i--;
+		}
 	}
-	free(arr_str);
-	arr_str = NULL;
+	else
+	{
+		i = 0;
+		while (i < (int)len)
+		{
+			*(char *)(dst + i) = *(char *)(src + i);
+			i++;
+		}
+	}
+	return (dst);
 }

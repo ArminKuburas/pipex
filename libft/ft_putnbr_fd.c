@@ -1,27 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_utils.c                                      :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/18 09:10:28 by akuburas          #+#    #+#             */
-/*   Updated: 2023/12/18 11:03:31 by akuburas         ###   ########.fr       */
+/*   Created: 2023/10/31 09:09:58 by akuburas          #+#    #+#             */
+/*   Updated: 2023/10/31 10:33:21 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-void	ft_free_substrings(char **arr_str)
+void	ft_putnbr_fd(int n, int fd)
 {
-	int	i;
+	char	digit;
+	long	num;
 
-	while (arr_str[i])
+	num = (long)n;
+	if (n == 0)
 	{
-		free(arr_str[i]);
-		arr_str[i] = NULL;
-		i++;
+		write(fd, "0", 1);
+		return ;
 	}
-	free(arr_str);
-	arr_str = NULL;
+	if (num < 0)
+	{
+		write(fd, "-", 1);
+		num = -num;
+	}
+	if (n / 10)
+		ft_putnbr_fd(num / 10, fd);
+	digit = '0' + (num % 10);
+	write(fd, &digit, 1);
 }

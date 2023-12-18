@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_utils.c                                      :+:      :+:    :+:   */
+/*   ft_lstlast_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/18 09:10:28 by akuburas          #+#    #+#             */
-/*   Updated: 2023/12/18 11:03:31 by akuburas         ###   ########.fr       */
+/*   Created: 2023/10/31 16:03:20 by akuburas          #+#    #+#             */
+/*   Updated: 2023/11/01 12:30:41 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-void	ft_free_substrings(char **arr_str)
+t_list	*ft_lstlast(t_list *lst)
 {
-	int	i;
-
-	while (arr_str[i])
+	if (lst == NULL)
+		return (NULL);
+	while (lst->next != NULL)
 	{
-		free(arr_str[i]);
-		arr_str[i] = NULL;
-		i++;
+		lst = lst->next;
 	}
-	free(arr_str);
-	arr_str = NULL;
+	return (lst);
 }

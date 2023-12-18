@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_utils.c                                      :+:      :+:    :+:   */
+/*   ft_lstiter_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/18 09:10:28 by akuburas          #+#    #+#             */
-/*   Updated: 2023/12/18 11:03:31 by akuburas         ###   ########.fr       */
+/*   Created: 2023/11/01 10:13:57 by akuburas          #+#    #+#             */
+/*   Updated: 2023/11/01 12:30:44 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-void	ft_free_substrings(char **arr_str)
+void	ft_lstiter(t_list *lst, void (*f)(void *))
 {
-	int	i;
-
-	while (arr_str[i])
+	if (lst == NULL || f == NULL)
+		return ;
+	while (lst != NULL)
 	{
-		free(arr_str[i]);
-		arr_str[i] = NULL;
-		i++;
+		f(lst->content);
+		lst = lst->next;
 	}
-	free(arr_str);
-	arr_str = NULL;
 }
