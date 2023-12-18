@@ -1,16 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pipex_split.c                                   :+:      :+:    :+:   */
+/*   new_ft_split_test_02.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/18 13:28:10 by akuburas          #+#    #+#             */
-/*   Updated: 2023/12/18 13:29:42 by akuburas         ###   ########.fr       */
+/*   Created: 2023/12/18 11:18:59 by akuburas          #+#    #+#             */
+/*   Updated: 2023/12/18 13:26:35 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 static int	inside_quotes(char c, char *quote)
 {
@@ -85,6 +87,21 @@ static char	*extract_word(const char *s, int *index)
 	return (strndup(s + start, end - start));
 }
 
+void	ft_free_substrings(char **arr_str)
+{
+	int	i;
+
+	i = 0;
+	while (arr_str[i])
+	{
+		free(arr_str[i]);
+		arr_str[i] = NULL;
+		i++;
+	}
+	free(arr_str);
+	arr_str = NULL;
+}
+
 char	**ft_pipex_split(const char *s)
 {
 	char	**result;
@@ -112,4 +129,32 @@ char	**ft_pipex_split(const char *s)
 	}
 	result[count] = NULL;
 	return (result);
+}
+
+int main(void)
+{
+	char command[] = "awk '{ut += $3} {ft+= $2} END {printf(\"%.2f\", ut/ft*100)}'";
+	char **args = ft_split(command);
+
+	if (args)
+	{
+		int i = 0;
+		while (args[i])
+		{
+			printf("Token %d: %s\n", i, args[i]);
+			i++;
+		}
+		if (args[i] == NULL)
+			printf("The third token is set to NULL.\n");
+		else
+			printf("The third token is not set to NULL.\n");
+		i = 0;
+		while (args[i])
+		{
+			free(args[i]);
+			i++;
+		}
+		free(args);
+	}
+	return (0);
 }
