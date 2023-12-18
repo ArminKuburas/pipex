@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 12:54:37 by akuburas          #+#    #+#             */
-/*   Updated: 2023/12/15 15:53:45 by akuburas         ###   ########.fr       */
+/*   Updated: 2023/12/18 09:10:09 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,14 @@ static void	ft_execute(char *function, char **env)
 
 	function_commands = ft_pipex_split(function);
 	path = ft_path_make(function_commands[0], env);
-	
+	if (execve(path, function_commands, env) == -1)
+	{
+		ft_putstr_fd("pipex: command not found: ", 2);
+		ft_putendl_fd(function_commands[0], 2);
+		ft_free_substrings(function_commands);
+		free(path);
+		exit(0);
+	}
 }
 
 static void	child(char **argv, int p_fd[], char **env)
