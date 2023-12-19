@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 16:36:04 by akuburas          #+#    #+#             */
-/*   Updated: 2023/12/14 17:02:37 by akuburas         ###   ########.fr       */
+/*   Updated: 2023/12/19 09:31:02 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,5 @@ int	main(int argc, char *argv[], char **env)
 	i = 0;
 	while (env[i] != NULL)
 		printf("%s\n", env[i++]);
-	return (0); 
+	return (0);
 }
