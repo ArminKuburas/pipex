@@ -6,13 +6,13 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 09:20:05 by akuburas          #+#    #+#             */
-/*   Updated: 2023/12/19 11:32:15 by akuburas         ###   ########.fr       */
+/*   Updated: 2023/12/20 10:45:24 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char	*get_path(char *terminal_function, char **env)
+static char	*get_path(char *path_name, char **env)
 {
 	int		i;
 	int		j;
@@ -25,7 +25,7 @@ char	*get_path(char *terminal_function, char **env)
 		while (env[i][j] && env[i][j] != '=')
 			j++;
 		path = ft_substr(env[i], 0, j);
-		if (ft_strcmp(path, terminal_function) == 0)
+		if (ft_strcmp(path, path_name) == 0)
 		{
 			free(path);
 			return (env[i] + j + 1);
@@ -44,11 +44,11 @@ char	*ft_path_make(char *terminal_function, char **env)
 	char	*function_path;
 
 	i = 0;
-	all_paths = ft_split(get_path(terminal_function, env), ':');
+	all_paths = ft_split(get_path("PATH", env), ':');
 	while (all_paths[i])
 	{
-		test_path = strjoin(all_paths[i], "/");
-		function_path = strjoin(test_path, terminal_function);
+		test_path = ft_strjoin(all_paths[i], "/");
+		function_path = ft_strjoin(test_path, terminal_function);
 		free(test_path);
 		if (access(function_path, F_OK | X_OK) == 0)
 			return (function_path);

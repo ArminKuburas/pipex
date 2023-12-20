@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:03:05 by akuburas          #+#    #+#             */
-/*   Updated: 2023/12/18 15:00:01 by akuburas         ###   ########.fr       */
+/*   Updated: 2023/12/20 10:54:51 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 char	*ft_strndup(const char *s, size_t n);
 void	ft_free_substrings(char **arr_str);
 char	**ft_pipex_split(const char *s);
-
+char	*ft_path_make(char *terminal_function, char **env);
+int		ft_strcmp(char *s1, char *s2);
 
 #endif

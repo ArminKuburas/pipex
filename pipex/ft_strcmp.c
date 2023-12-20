@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strndup.c                                       :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/18 14:44:37 by akuburas          #+#    #+#             */
-/*   Updated: 2023/12/20 11:03:45 by akuburas         ###   ########.fr       */
+/*   Created: 2023/12/20 10:50:22 by akuburas          #+#    #+#             */
+/*   Updated: 2023/12/20 10:54:32 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char	*ft_strndup(const char *s, size_t n)
+int	ft_strcmp(char *s1, char *s2)
 {
-	size_t	len;
-	char	*new_str;
+	size_t	i;
 
-	len = ft_strlen(s);
-	new_str = (char *)ft_calloc(len + 1, sizeof(char));
-	if (new_str)
+	i = 0;
+	while (i[s1] || i[s2])
 	{
-		ft_memcpy(new_str, s, n);
+		if (i[s1] != i[s2])
+			return (i[s1] - i[s2]);
+		i++;
 	}
-	return (new_str);
+	return (0);
 }

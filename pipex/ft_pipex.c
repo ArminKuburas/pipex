@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 12:54:37 by akuburas          #+#    #+#             */
-/*   Updated: 2023/12/18 09:10:09 by akuburas         ###   ########.fr       */
+/*   Updated: 2023/12/20 11:20:44 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static void	ft_execute(char *function, char **env)
 {
 	char	**function_commands;
 	char	*path;
+	perror("ft_execute\n");
 
 	function_commands = ft_pipex_split(function);
 	path = ft_path_make(function_commands[0], env);
@@ -34,6 +35,7 @@ static void	child(char **argv, int p_fd[], char **env)
 	int	fd;
 
 	fd = open(argv[1], O_RDONLY, 0777);
+	perror("child error\n");
 	if (fd == -1)
 		exit (-1);
 	dup2(fd, 0);
@@ -47,6 +49,7 @@ static void	parent(char **argv, int p_fd[], char **env)
 	int	fd;
 
 	fd = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	perror("parent error\n");
 	if (fd == -1)
 		exit (-1);
 	dup2(fd, 1);
@@ -63,7 +66,7 @@ int	main(int argc, char *argv[], char **env)
 	if (argc != 5)
 	{
 		perror("./pipex file1 cmd cmd file2");
-		exit(0);
+		exit(1);
 	}
 	if (pipe(p_fd) == -1)
 		exit(-1);
@@ -71,7 +74,7 @@ int	main(int argc, char *argv[], char **env)
 	if (pid == -1)
 		exit(-1);
 	if (pid == 0)
-		child(argv[1], p_fd, env);
+		child(argv, p_fd, env);
 	else
-		parent(argv[4], p_fd, env);
+		parent(argv, p_fd, env);
 }
