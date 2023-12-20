@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/18 09:10:28 by akuburas          #+#    #+#             */
-/*   Updated: 2023/12/20 14:58:23 by akuburas         ###   ########.fr       */
+/*   Created: 2023/12/20 14:58:37 by akuburas          #+#    #+#             */
+/*   Updated: 2023/12/20 15:14:54 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "ft_pipex.h"
 
 void	ft_free_substrings(char **arr_str)
 {
@@ -41,4 +41,11 @@ int	open_file(char *file, int in_or_out)
 		exit(0);
 	}
 	return (ret);
+}
+
+void	handle_exit(int exit_value)
+{
+	if (exit_value == 1)
+		ft_putstr_fd("./pipex infile cmd cmd outfile\n", 2);
+	exit(0);
 }

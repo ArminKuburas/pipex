@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 14:42:38 by akuburas          #+#    #+#             */
-/*   Updated: 2023/12/20 14:42:39 by akuburas         ###   ########.fr       */
+/*   Updated: 2023/12/20 15:01:18 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,6 @@ char	**ft_pipex_split(const char *s);
 char	*ft_path_make(char *terminal_function, char **env);
 int		ft_strcmp(char *s1, char *s2);
 int		open_file(char *file, int in_or_out);
+void	handle_exit(int exit_value);
 
 #endif

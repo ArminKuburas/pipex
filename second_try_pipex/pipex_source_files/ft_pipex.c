@@ -6,11 +6,11 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 14:44:21 by akuburas          #+#    #+#             */
-/*   Updated: 2023/12/20 14:49:46 by akuburas         ###   ########.fr       */
+/*   Updated: 2023/12/20 15:14:39 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "ft_pipex.h"
 
 static void	ft_execute(char *function, char **env)
 {
@@ -32,6 +32,7 @@ static void	ft_execute(char *function, char **env)
 static void	child(char **argv, int p_fd[], char **env)
 {
 	int	fd;
+
 	fd = open_file(argv[1], 0);
 	dup2(fd, 0);
 	dup2(p_fd[1], 1);
@@ -43,9 +44,7 @@ static void	parent(char **argv, int p_fd[], char **env)
 {
 	int	fd;
 
-	fd = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0777);
-	if (fd == -1)
-		exit (-1);
+	fd = open_file(argv[1], 1);
 	dup2(fd, 1);
 	dup2(p_fd[0], 0);
 	close(p_fd[1]);
@@ -56,7 +55,6 @@ int	main(int argc, char *argv[], char **env)
 {
 	int		p_fd[2];
 	pid_t	pid;
-	int		status;
 
 	if (argc != 5)
 		handle_exit(1);
@@ -68,9 +66,5 @@ int	main(int argc, char *argv[], char **env)
 	if (pid == 0)
 		child(argv, p_fd, env);
 	else
-	{
 		parent(argv, p_fd, env);
-		if (waitpid(pid, &status, 0) == -1)
-			exit(EXIT_FAILURE);
-	}
 }
