@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 09:10:28 by akuburas          #+#    #+#             */
-/*   Updated: 2023/12/21 07:15:25 by akuburas         ###   ########.fr       */
+/*   Updated: 2023/12/21 17:03:34 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int	open_file(char *file, int in_or_out)
 	{
 		ft_putstr_fd("No such file or directory: ", 2);
 		ft_putstr_fd(file, 2);
+		ft_putstr_fd("\n", 2);
 		exit(0);
 	}
 	return (fd);

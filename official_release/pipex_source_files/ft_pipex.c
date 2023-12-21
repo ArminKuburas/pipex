@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 12:54:37 by akuburas          #+#    #+#             */
-/*   Updated: 2023/12/21 13:01:17 by akuburas         ###   ########.fr       */
+/*   Updated: 2023/12/21 17:22:40 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	child_two(char **argv, int p_fd[], char **env)
 	ft_execute(argv[3], env);
 }
 
-static void	ft_fork_twice(int pid1, char **argv, char **env, char *p_fd)
+static void	ft_fork_twice(int pid1, char **argv, char **env, int *p_fd)
 {
 	pid_t	pid2;
 	int		status;
@@ -78,7 +78,6 @@ int	main(int argc, char *argv[], char **env)
 {
 	int		p_fd[2];
 	pid_t	pid;
-	int		status;
 
 	if (argc != 5)
 	{
