@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 14:44:21 by akuburas          #+#    #+#             */
-/*   Updated: 2023/12/20 15:14:39 by akuburas         ###   ########.fr       */
+/*   Updated: 2023/12/21 06:31:38 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	child(char **argv, int p_fd[], char **env)
 {
 	int	fd;
 
-	fd = open_file(argv[1], 0);
+	fd = open_file(argv[1], 1);
 	dup2(fd, 0);
 	dup2(p_fd[1], 1);
 	close(p_fd[0]);
@@ -44,7 +44,7 @@ static void	parent(char **argv, int p_fd[], char **env)
 {
 	int	fd;
 
-	fd = open_file(argv[1], 1);
+	fd = open_file(argv[1], 0);
 	dup2(fd, 1);
 	dup2(p_fd[0], 0);
 	close(p_fd[1]);

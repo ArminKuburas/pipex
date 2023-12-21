@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 09:10:28 by akuburas          #+#    #+#             */
-/*   Updated: 2023/12/20 14:58:23 by akuburas         ###   ########.fr       */
+/*   Updated: 2023/12/21 07:15:25 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,17 @@ void	ft_free_substrings(char **arr_str)
 
 int	open_file(char *file, int in_or_out)
 {
-	int	ret;
+	int	fd;
 
 	if (in_or_out == 0)
-		ret = open(file, O_RDONLY, 0777);
+		fd = open(file, O_RDONLY, 0777);
 	if (in_or_out == 1)
-		ret = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
-	if (ret == -1)
+		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	if (fd == -1)
 	{
-		perror("right before exit inside of open_file");
+		ft_putstr_fd("No such file or directory: ", 2);
+		ft_putstr_fd(file, 2);
 		exit(0);
 	}
-	return (ret);
+	return (fd);
 }
