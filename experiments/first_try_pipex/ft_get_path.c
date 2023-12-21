@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 09:20:05 by akuburas          #+#    #+#             */
-/*   Updated: 2023/12/21 07:03:52 by akuburas         ###   ########.fr       */
+/*   Updated: 2023/12/21 08:45:49 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,26 @@ static char	*get_path(char *path_name, char **env)
 	return (NULL);
 }
 
+static void	exit_path(char *terminal_function)
+{
+	ft_putstr_fd(terminal_function, 2);
+	ft_putstr_fd(": No such file or directory\n", 2);
+	exit(1);
+}
+
 char	*ft_path_make(char *terminal_function, char **env)
 {
 	char	**all_paths;
 	int		i;
 	char	*test_path;
 	char	*function_path;
+	char	*path_str;
 
 	i = 0;
-	all_paths = ft_split(get_path("PATH", env), ':');
+	path_str = get_path("PATH", env);
+	if (!path_str)
+		exit_path(terminal_function);
+	all_paths = ft_split(path_str, ':');
 	while (all_paths[i])
 	{
 		test_path = ft_strjoin(all_paths[i], "/");
