@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 12:54:37 by akuburas          #+#    #+#             */
-/*   Updated: 2023/12/21 08:42:16 by akuburas         ###   ########.fr       */
+/*   Updated: 2023/12/21 13:01:17 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	child(char **argv, int p_fd[], char **env)
 	ft_execute(argv[2], env);
 }
 
-static void	parent(char **argv, int p_fd[], char **env)
+static void	child_two(char **argv, int p_fd[], char **env)
 {
 	int	fd;
 
@@ -51,6 +51,27 @@ static void	parent(char **argv, int p_fd[], char **env)
 	dup2(p_fd[0], 0);
 	close(p_fd[1]);
 	ft_execute(argv[3], env);
+}
+
+static void	ft_fork_twice(int pid1, char **argv, char **env, char *p_fd)
+{
+	pid_t	pid2;
+	int		status;
+
+	pid2 = fork();
+	if (pid2 == -1)
+		exit(-1);
+	if (pid2 == 0)
+		child_two(argv, p_fd, env);
+	else
+	{
+		close(p_fd[0]);
+		close(p_fd[1]);
+		if (waitpid(pid1, &status, 0) == -1)
+			exit(EXIT_FAILURE);
+		if (waitpid(pid2, &status, 0) == -1)
+			exit(EXIT_FAILURE);
+	}
 }
 
 int	main(int argc, char *argv[], char **env)
@@ -73,8 +94,7 @@ int	main(int argc, char *argv[], char **env)
 		child(argv, p_fd, env);
 	else
 	{
-		parent(argv, p_fd, env);
-		if (waitpid(pid, &status, 0) == -1)
-			exit(EXIT_FAILURE);
+		ft_fork_twice(pid, argv, env, p_fd);
 	}
+	return (0);
 }
