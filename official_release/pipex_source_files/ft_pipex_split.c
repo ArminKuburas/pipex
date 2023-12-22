@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 13:28:10 by akuburas          #+#    #+#             */
-/*   Updated: 2023/12/20 10:05:47 by akuburas         ###   ########.fr       */
+/*   Updated: 2023/12/22 15:18:13 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,17 +67,18 @@ static char	*extract_word(const char *s, int *index)
 
 	while (s[*index] == ' ')
 		(*index)++;
-	start = *index;
-	if (s[start] == '\'' || s[start] == '"')
+	if (s[*index] == '\'' || s[*index] == '"')
 	{
-		quote = s[start];
+		quote = s[*index];
 		(*index)++;
+		start = *index;
 		while (s[*index] && s[*index] != quote)
 			(*index)++;
-		end = ++(*index);
+		end = (*index);
 	}
 	else
 	{
+		start = *index;
 		while (s[*index] && s[*index] != ' ')
 			(*index)++;
 		end = *index;

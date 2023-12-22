@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 12:54:37 by akuburas          #+#    #+#             */
-/*   Updated: 2023/12/21 17:22:40 by akuburas         ###   ########.fr       */
+/*   Updated: 2023/12/22 15:41:31 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	child_two(char **argv, int p_fd[], char **env)
 {
 	int	fd;
 
-	fd = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	fd = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 		exit (-1);
 	dup2(fd, 1);
