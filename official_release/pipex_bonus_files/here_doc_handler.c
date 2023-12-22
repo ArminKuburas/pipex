@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 20:43:09 by akuburas          #+#    #+#             */
-/*   Updated: 2023/12/21 21:05:07 by akuburas         ###   ########.fr       */
+/*   Updated: 2023/12/22 15:52:28 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	here_doc_in(char **argv, int *p_fd)
 			exit(0);
 		}
 		ft_putstr_fd(line, p_fd[1]);
-		free(ret);
+		free(line);
 	}
 }
 
