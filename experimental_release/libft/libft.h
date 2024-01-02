@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 07:40:02 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/02 15:44:16 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/02 17:19:31 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,6 @@ void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(f)(void *), void (*del)(void *));
 int		ft_strcmp(char *s1, char *s2);
 char	*ft_strndup(const char *s, size_t n);
+char	*get_next_line(int fd);
+
 #endif

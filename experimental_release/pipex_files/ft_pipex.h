@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   ft_pipex.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/20 10:50:22 by akuburas          #+#    #+#             */
-/*   Updated: 2023/12/20 10:54:32 by akuburas         ###   ########.fr       */
+/*   Created: 2024/01/02 17:24:21 by akuburas          #+#    #+#             */
+/*   Updated: 2024/01/02 17:26:53 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#ifndef FT_PIPEX_H
+# define FT_PIPEX_H
 
-int	ft_strcmp(char *s1, char *s2)
-{
-	size_t	i;
+# include "../libft/libft.h"
 
-	i = 0;
-	while (i[s1] || i[s2])
-	{
-		if (i[s1] != i[s2])
-			return (i[s1] - i[s2]);
-		i++;
-	}
-	return (0);
-}
+char	**ft_pipex_split(const char *s);
+void	ft_free_substrings(char **arr_str);
+int		open_file(char *file, int in_or_out);
+char	*ft_path_make(char *terminal_function, char **env);
+
+#endif

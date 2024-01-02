@@ -6,7 +6,7 @@
 #    By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/27 08:04:40 by akuburas          #+#    #+#              #
-#    Updated: 2024/01/02 15:43:06 by akuburas         ###   ########.fr        #
+#    Updated: 2024/01/02 17:19:45 by akuburas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,12 +46,11 @@ SRCS = 	ft_atoi.c \
 		ft_putstr_fd.c \
 		ft_putendl_fd.c \
 		ft_putnbr_fd.c \
+		ft_strcmp.c \
 		ft_strndup.c \
-		ft_strcmp.c
-		
-		
-OBJDIR = ../object_files
-OBJS = $(addprefix $(OBJDIR)/, ${SRCS:.c=.o})
+		get_next_line_bonus.c
+
+OBJS = ${SRCS:.c=.o}
 
 BONUS = ft_lstnew_bonus.c \
 		ft_lstadd_front_bonus.c \
@@ -63,7 +62,7 @@ BONUS = ft_lstnew_bonus.c \
 		ft_lstiter_bonus.c \
 		ft_lstmap_bonus.c \
 
-BONUS_OBJS = $(addprefix $(OBJDIR)/, $(BONUS:.c=.o))
+BONUS_OBJS = $(BONUS:.c=.o)
 
 HEAD = libft.h
 
@@ -74,32 +73,26 @@ LIB = ranlib
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
-all: $(OBJDIR) ${NAME}
+all: ${NAME}
 
 ${NAME}: ${OBJS}
 	${AR} ${NAME} ${OBJS}
 	${LIB} ${NAME}
 
-$(OBJDIR)/%.o: %.c $(HEAD)
-	@${CC} ${CFLAGS} -c $< -o $@
-
-bonus: .bonus
-
-		
-.bonus: $(OBJDIR) $(OBJS) $(BONUS_OBJS)
-		$(AR) $(NAME) $(OBJS) $(BONUS_OBJS)
-		@touch .bonus
-
-$(OBJDIR):
-	mkdir -p $(OBJDIR)
+%.o: %.c
+	${CC} ${CFLAGS} -c $< -o $@
 
 clean:
-	@${RM} ${OBJS} ${BONUS_OBJS} ${OBJDIR} .bonus
+	${RM} ${OBJS} ${BONUS_OBJS} .bonus
 
 fclean: clean
 	${RM} ${NAME}
 
 re: fclean all
+bonus: .bonus
 
-
+		
+.bonus: $(OBJS) $(BONUS_OBJS)
+		$(AR) $(NAME) $(OBJS) $(BONUS_OBJS)
+		@touch .bonus
 .PHONY: all clean fclean re bonus
