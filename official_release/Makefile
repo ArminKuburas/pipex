@@ -19,7 +19,8 @@ OBJS = $(addprefix $(OBJDIR)/, $(notdir $(SRCS:.c=.o)))
 BONUS_SRCS =	$(BONUSDIR)/exit_handler_bonus.c \
 				$(BONUSDIR)/ft_handle_file_bonus.c \
 				$(BONUSDIR)/here_doc_handler_bonus.c \
-				$(BONUSDIR)/pipex_bonus.c \
+				$(BONUSDIR)/pipex_bonus.c
+BONUS_OBJS = $(addprefix $(OBJDIR)/, $(notdir $(BONUS_SRCS:.c=.o)))
 LIBFT = $(LIBFTDIR)/libft.a
 LIB = ranlib
 NAME = pipex
@@ -32,6 +33,12 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
 	$(CC) $(CFLAGS) -I$(HEADERDIR) -c $< -o $@
 $(OBJDIR):
 	mkdir -p $(OBJDIR)
+
+bonus: .bonus
+		
+.bonus: $(OBJDIR) $(OBJS) $(BONUS_OBJS)
+		$(AR) $(NAME) $(OBJS) $(BONUS_OBJS)
+		@touch .bonus
 
 clean:
 	@$(MAKE) -C $(LIBFTDIR) clean
