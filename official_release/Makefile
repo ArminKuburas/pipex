@@ -9,7 +9,6 @@ OBJDIR = object_files
 BONUS_OBJDIR = bonus_object_files
 LIBFTDIR = libft
 HEADERDIR = header_files
-GNLDIR = get_next_line
 
 SRCS =	$(SRCDIR)/ft_get_path.c \
 		$(SRCDIR)/ft_pipex_split.c \
@@ -19,14 +18,18 @@ SRCS =	$(SRCDIR)/ft_get_path.c \
 		$(SRCDIR)/pipex_utils.c
 OBJS = $(addprefix $(OBJDIR)/, $(notdir $(SRCS:.c=.o)))
 
-BONUS_SRCS =	$(BONUSDIR)/exit_handler_bonus.c \
+BONUS_SRCS =	$(BONUSDIR)/pipex_utils_bonus.c \
 				$(BONUSDIR)/ft_handle_file_bonus.c \
 				$(BONUSDIR)/here_doc_handler_bonus.c \
 				$(BONUSDIR)/pipex_bonus.c \
-				$(GNLDIR)/get_next_line_bonus.c
+				$(BONUSDIR)/ft_get_path_bonus.c \
+				$(BONUSDIR)/ft_pipex_split_bonus.c \
+				$(BONUSDIR)/ft_strcmp_bonus.c \
+				$(BONUSDIR)/ft_strndup_bonus.c \
+				$(BONUSDIR)/get_next_line_bonus.c
+
 BONUS_OBJS = $(addprefix $(BONUS_OBJDIR)/, $(notdir $(BONUS_SRCS:.c=.o)))
 LIBFT = $(LIBFTDIR)/libft.a
-LIB = ranlib
 NAME = pipex
 all: $(NAME)
 $(NAME): $(OBJS) $(LIBFT)
@@ -39,20 +42,22 @@ $(OBJDIR):
 	@mkdir -p $(OBJDIR)
 $(BONUS_OBJDIR)/%.o: $(BONUSDIR)/%.c | $(BONUS_OBJDIR)
 	@$(CC) $(CFLAGS) -I$(HEADERDIR) -c $< -o $@
+
 $(BONUS_OBJDIR):
 	@mkdir -p $(BONUS_OBJDIR)
 
 bonus: .bonus
 $(info BONUS_OBJS: $(BONUS_OBJS))
 
-.bonus: $(OBJS) $(LIBFT) $(BONUS_OBJS) 
-		$(CC) $(CFLAGS) -I $(HEADERDIR) $(OBJS) $(BONUS_OBJS) -L$(LIBFTDIR) -lft -o $(NAME)
+.bonus: $(LIBFT) $(BONUS_OBJS) 
+		$(CC) $(CFLAGS) -I $(HEADERDIR) $(BONUS_OBJS) -L$(LIBFTDIR) -lft -o $(NAME)
 		@touch .bonus
 
 clean:
 	@$(MAKE) clean -C $(LIBFTDIR)
 	rm -rf $(OBJDIR)
 	rm -rf .bonus
+	rm -rf $(BONUS_OBJDIR)
 fclean: clean
 	@$(MAKE) fclean -C $(LIBFTDIR)
 	rm -f $(NAME)

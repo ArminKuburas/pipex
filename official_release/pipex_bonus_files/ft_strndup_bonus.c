@@ -1,32 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_handle_file_bonus.c                             :+:      :+:    :+:   */
+/*   ft_strndup_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/22 16:51:33 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/02 15:24:32 by akuburas         ###   ########.fr       */
+/*   Created: 2023/12/18 14:44:37 by akuburas          #+#    #+#             */
+/*   Updated: 2024/01/02 15:13:23 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	handle_file(char *file, int in_or_out)
+char	*ft_strndup(const char *s, size_t n)
 {
-	int	fd;
+	size_t	len;
+	char	*new_str;
 
-	if (in_or_out == 0)
-		fd = open(file, O_RDONLY, 0777);
-	else if (in_or_out == 1)
-		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
-	else if (in_or_out == 2)
-		fd = open (file, O_WRONLY | O_CREAT | O_APPEND, 0777);
-	else
-		fd = -1;
-	if (fd == -1)
-		exit(0);
-	return (fd);
+	len = ft_strlen(s);
+	new_str = (char *)ft_calloc(len + 1, sizeof(char));
+	if (new_str)
+	{
+		ft_memcpy(new_str, s, n);
+	}
+	return (new_str);
 }
-
-

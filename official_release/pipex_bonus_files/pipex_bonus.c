@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 18:44:41 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/02 13:32:46 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/02 14:59:05 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,8 @@ static void	ft_execute(char *function, char **env)
 	}
 }
 
-static void	pipe_child_maker(char *command, char **env, pid_t *pid)
+static void	pipe_child_maker(char *command, char **env, pid_t *pid, int *p_fd)
 {
-	int		p_fd[2];
-
 	if (pipe(p_fd) == -1)
 		exit(0);
 	(*pid) = fork();
@@ -58,7 +56,8 @@ int	main(int argc, char **argv, char **env)
 	int		fd_in;
 	int		fd_out;
 	pid_t	pid[12288];
-	int		i;
+	int		p_fd[12288][2];
+	int		status;
 
 	if (argc < 5)
 		exit_handler(1);
@@ -70,12 +69,21 @@ int	main(int argc, char **argv, char **env)
 		i = 2;
 		fd_in = handle_file(argv[1], 0);
 		fd_out = handle_file(argv[argc - 1], 1);
-		dup(fd_in, 0);
+		dup2(fd_in, 0);
 	}
 	i = 0;
 	while (i < argc -2)
-		pipe_child_maker(argv[i], env, pid[i], i);
+	{
+		pipe_child_maker(argv[i], env, &pid[i], p_fd[i]);
+		i++;
+	}
 	dup2(fd_out, 1);
-	ft_execute(argv[argc - 2], env);
+	i = 0;
+	while (i < argc - 2)
+	{
+		if (waitpid(pid[i], &status, 0) == -1)
+			exit(EXIT_FAILURE);
+		i++;
+	}
 	return (0);
 }
