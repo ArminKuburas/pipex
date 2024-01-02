@@ -3,6 +3,7 @@ CFLAGS = -Wall -Wextra -Werror
 MAKE = make
 
 SRCDIR = pipex_source_files
+BONUSDIR = pipex_bonus_files
 OBJDIR = object_files
 LIBFTDIR = libft
 HEADERDIR = header_files
@@ -15,6 +16,10 @@ SRCS =	$(SRCDIR)/ft_get_path.c \
 		$(SRCDIR)/pipex_utils.c
 OBJS = $(addprefix $(OBJDIR)/, $(notdir $(SRCS:.c=.o)))
 
+BONUS_SRCS =	$(BONUSDIR)/exit_handler_bonus.c \
+				$(BONUSDIR)/ft_handle_file_bonus.c \
+				$(BONUSDIR)/here_doc_handler_bonus.c \
+				$(BONUSDIR)/pipex_bonus.c \
 LIBFT = $(LIBFTDIR)/libft.a
 LIB = ranlib
 NAME = pipex

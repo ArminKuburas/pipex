@@ -1,26 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_handle_file.c                                   :+:      :+:    :+:   */
+/*   pipex_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/22 16:51:33 by akuburas          #+#    #+#             */
-/*   Updated: 2023/12/22 16:51:34 by akuburas         ###   ########.fr       */
+/*   Created: 2024/01/02 11:23:32 by akuburas          #+#    #+#             */
+/*   Updated: 2024/01/02 11:24:06 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	handle_file(char *file, int in_or_out)
-{
-	int	fd;
+#ifndef PIPEX_BONUS_H
+# define PIPEX_BONUS_H
 
-	if (in_or_out == 0)
-		fd = open(file, O_RDONLY, 0777);
-	else if (in_or_out == 1)
-		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
-	else if (in_or_out == 2)
-		fd = open (file, O_WRONLY | O_CREAT | O_APPEND, 0777);
-	if (fd == -1)
-		exit(0);
-	return (fd);
-}
+void	exit_handler(int n_exit);
+int		handle_file(char *file, int in_or_out);
+void	here_doc_handler(char **argv, int argc, int *fd_out);
+
+
+#endif
