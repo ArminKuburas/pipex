@@ -9,6 +9,7 @@ OBJDIR = object_files
 BONUS_OBJDIR = bonus_object_files
 LIBFTDIR = libft
 HEADERDIR = header_files
+GNLDIR = get_next_line
 
 SRCS =	$(SRCDIR)/ft_get_path.c \
 		$(SRCDIR)/ft_pipex_split.c \
@@ -21,7 +22,8 @@ OBJS = $(addprefix $(OBJDIR)/, $(notdir $(SRCS:.c=.o)))
 BONUS_SRCS =	$(BONUSDIR)/exit_handler_bonus.c \
 				$(BONUSDIR)/ft_handle_file_bonus.c \
 				$(BONUSDIR)/here_doc_handler_bonus.c \
-				$(BONUSDIR)/pipex_bonus.c
+				$(BONUSDIR)/pipex_bonus.c \
+				$(GNLDIR)/get_next_line_bonus.c
 BONUS_OBJS = $(addprefix $(BONUS_OBJDIR)/, $(notdir $(BONUS_SRCS:.c=.o)))
 LIBFT = $(LIBFTDIR)/libft.a
 LIB = ranlib

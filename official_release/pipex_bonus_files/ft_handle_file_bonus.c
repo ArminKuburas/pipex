@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/22 16:51:33 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/02 12:43:20 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/02 12:50:41 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int	handle_file(char *file, int in_or_out)
 		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	else if (in_or_out == 2)
 		fd = open (file, O_WRONLY | O_CREAT | O_APPEND, 0777);
+	else
+		fd = -1;
 	if (fd == -1)
 		exit(0);
 	return (fd);

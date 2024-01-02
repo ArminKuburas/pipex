@@ -1,22 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_bonus.h                                      :+:      :+:    :+:   */
+/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/02 11:23:32 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/02 13:23:29 by akuburas         ###   ########.fr       */
+/*   Created: 2023/12/04 11:26:06 by akuburas          #+#    #+#             */
+/*   Updated: 2024/01/02 13:22:43 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_BONUS_H
-# define PIPEX_BONUS_H
+#ifndef GET_NEXT_LINE_BONUS_H
+# define GET_NEXT_LINE_BONUS_H
 
-# include "get_next_line_bonus.h"
+# include <stdlib.h>
+# include <unistd.h>
 
-void	exit_handler(int n_exit);
-int		handle_file(char *file, int in_or_out);
-void	here_doc_handler(char **argv, int argc, int *fd_out);
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
+
+char	*get_next_line(int fd);
 
 #endif

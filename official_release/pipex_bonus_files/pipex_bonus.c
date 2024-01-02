@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 18:44:41 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/02 12:43:47 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/02 13:32:46 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	main(int argc, char **argv, char **env)
 	}
 	i = 0;
 	while (i < argc -2)
-		pipe_child_maker(argc, argv[i++], env, pid[i++]);
+		pipe_child_maker(argv[i], env, pid[i], i);
 	dup2(fd_out, 1);
 	ft_execute(argv[argc - 2], env);
 	return (0);
