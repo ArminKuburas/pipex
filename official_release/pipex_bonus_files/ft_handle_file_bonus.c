@@ -6,9 +6,11 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/22 16:51:33 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/02 11:23:17 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/02 12:43:20 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "pipex.h"
 
 int	handle_file(char *file, int in_or_out)
 {

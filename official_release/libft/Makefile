@@ -6,7 +6,7 @@
 #    By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/27 08:04:40 by akuburas          #+#    #+#              #
-#    Updated: 2023/12/21 09:35:28 by akuburas         ###   ########.fr        #
+#    Updated: 2024/01/02 12:21:03 by akuburas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,7 +78,7 @@ ${NAME}: ${OBJS}
 	${LIB} ${NAME}
 
 $(OBJDIR)/%.o: %.c $(HEAD)
-	${CC} ${CFLAGS} -c $< -o $@
+	@${CC} ${CFLAGS} -c $< -o $@
 
 bonus: .bonus
 
@@ -91,7 +91,7 @@ $(OBJDIR):
 	mkdir -p $(OBJDIR)
 
 clean:
-	${RM} ${OBJS} ${BONUS_OBJS} .bonus
+	@${RM} ${OBJS} ${BONUS_OBJS} ${OBJDIR} .bonus
 
 fclean: clean
 	${RM} ${NAME}

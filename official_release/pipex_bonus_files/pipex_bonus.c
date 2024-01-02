@@ -6,11 +6,12 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 18:44:41 by akuburas          #+#    #+#             */
-/*   Updated: 2023/12/22 16:26:37 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/02 12:43:47 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
+#include "pipex.h"
 
 static void	ft_execute(char *function, char **env)
 {

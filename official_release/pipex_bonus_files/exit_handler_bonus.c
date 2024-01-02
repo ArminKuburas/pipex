@@ -6,9 +6,11 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/22 16:54:01 by akuburas          #+#    #+#             */
-/*   Updated: 2023/12/22 16:54:12 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/02 12:42:41 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "pipex.h"
 
 void	exit_handler(int n_exit)
 {

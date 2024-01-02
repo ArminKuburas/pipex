@@ -6,11 +6,11 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 20:43:09 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/02 11:28:02 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/02 12:43:37 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
+#include "pipex.h"
 
 static void	here_doc_in(char **argv, int *p_fd)
 {
