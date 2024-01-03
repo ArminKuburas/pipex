@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 09:10:28 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/02 17:45:48 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/03 16:00:18 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ char	*ft_path_make(char *terminal_function, char **env)
 	char	*path_str;
 
 	i = 0;
+	if (access(terminal_function, F_OK | X_OK) == 0)
+		return (terminal_function);
 	path_str = get_path("PATH", env);
 	if (!path_str)
 		exit_path(terminal_function);

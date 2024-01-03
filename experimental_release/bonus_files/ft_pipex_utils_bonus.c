@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 12:12:57 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/03 13:17:49 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/03 14:56:28 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	file_opener( char *file, int type)
 	if (type == 0)
 	{
 		fd = open(file, O_RDONLY, 0777);
+		ft_putstr_fd("trying to open file1", 2);
 	}
 	else if (type == 1)
 		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
@@ -27,7 +28,10 @@ int	file_opener( char *file, int type)
 	else
 		fd = -1;
 	if (fd == -1)
+	{
+		ft_putstr_fd("doing exit 0", 2);
 		exit(0);
+	}
 	return (fd);
 }
 
