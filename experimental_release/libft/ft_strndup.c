@@ -6,11 +6,11 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 14:44:37 by akuburas          #+#    #+#             */
-/*   Updated: 2023/12/20 11:03:45 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/02 17:47:06 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
 char	*ft_strndup(const char *s, size_t n)
 {

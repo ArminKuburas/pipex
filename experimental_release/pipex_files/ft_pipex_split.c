@@ -6,11 +6,11 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 13:28:10 by akuburas          #+#    #+#             */
-/*   Updated: 2023/12/22 15:18:13 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/02 17:45:54 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "ft_pipex.h"
 
 static int	inside_quotes(char c, char *quote)
 {

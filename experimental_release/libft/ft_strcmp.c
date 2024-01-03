@@ -6,11 +6,11 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 10:50:22 by akuburas          #+#    #+#             */
-/*   Updated: 2023/12/20 10:54:32 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/02 17:48:27 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
 int	ft_strcmp(char *s1, char *s2)
 {
