@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 12:54:37 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/05 12:31:28 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/05 15:08:28 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,32 +66,31 @@ static int	ft_fork_twice(int pid1, char **argv, char **env, int *p_fd)
 	{
 		close(p_fd[0]);
 		close(p_fd[1]);
-		waitpid(pid1, &status, 0);
-		waitpid(pid2, &status, 0);
-		if (WIFEXITED(status))
-			return (WEXITSTATUS(status));
-			/* look into signal status stuff. Totally fucked stuff wtf. Also fix order of failure messages appearing. */
+
 	}
 }
 
 int	main(int argc, char *argv[], char **env)
 {
 	int			p_fd[2];
-	pid_t		pid;
+	pid_t		pid[2];
 	t_handler	message;
+	int			status;
 
 	if (argc != 5)
 	{
 		ft_putstr_fd("./pipex infile cmd cmd outfile\n", 2);
 		exit(1);
 	}
-	failure_message_handler(argc, argv, env, &message);
+	message_handler(argc, argv, env, &message);
 	if (pipe(p_fd) == -1)
-		exit(-1);
-	pid = fork();
-	if (pid == -1)
-		exit(-1);
-	if (pid == 0)
-		child(argv, p_fd, env);
-	return (ft_fork_twice(pid, argv, env, p_fd));
+		exit_handler(1);
+	if (pid[0] == -1)
+		exit_handler(2);
+	if (pid[0] == 0)
+		child(argv, p_fd, env, &message);
+	forker_function(&message, pid, p_fd);
+	waitpid(pid1, &status, 0);
+	waitpid(pid2, &status, 0);
+	return (message->signal_value);
 }

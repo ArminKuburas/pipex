@@ -1,32 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pipex_utils.c                                   :+:      :+:    :+:   */
+/*   ft_put_unsigned_nbr.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/18 09:10:28 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/05 14:20:03 by akuburas         ###   ########.fr       */
+/*   Created: 2023/11/26 13:24:24 by akuburas          #+#    #+#             */
+/*   Updated: 2024/01/05 14:25:11 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_pipex.h"
+#include "ft_printf.h"
 
-void	ft_free_substrings(char **arr_str)
+int	ft_put_u_nbr(unsigned int n, int *length)
 {
-	int	i;
+	char	digit;
 
-	i = 0;
-	while (arr_str[i])
+	if (n / 10)
 	{
-		free(arr_str[i]);
-		arr_str[i] = NULL;
-		i++;
+		if (ft_put_u_nbr(n / 10, length) == -1)
+			return (-1);
 	}
-	free(arr_str);
-	arr_str = NULL;
+	digit = '0' + (n % 10);
+	if (write(2, &digit, 1) == -1)
+		return (-1);
+	(*length)++;
+	return (*length);
 }
-
-
-
-

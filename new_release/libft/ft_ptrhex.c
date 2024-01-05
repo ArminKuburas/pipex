@@ -1,32 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pipex_utils.c                                   :+:      :+:    :+:   */
+/*   ft_ptrhex.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/18 09:10:28 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/05 14:20:03 by akuburas         ###   ########.fr       */
+/*   Created: 2023/11/26 13:41:02 by akuburas          #+#    #+#             */
+/*   Updated: 2024/01/05 14:25:01 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_pipex.h"
+#include "ft_printf.h"
 
-void	ft_free_substrings(char **arr_str)
+int	ft_ptrhex(unsigned long ptr, int *length)
 {
-	int	i;
+	const char	*hex_digits;
+	int			check;
 
-	i = 0;
-	while (arr_str[i])
+	hex_digits = "0123456789abcdef";
+	if (ptr >= 16)
 	{
-		free(arr_str[i]);
-		arr_str[i] = NULL;
-		i++;
+		if (ft_ptrhex(ptr / 16, length) == -1)
+			return (-1);
 	}
-	free(arr_str);
-	arr_str = NULL;
+	(*length)++;
+	check = write(2, (&hex_digits[ptr % 16]), 1);
+	if (check == -1)
+		return (-1);
+	return (*length);
 }
-
-
-
-

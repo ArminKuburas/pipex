@@ -1,32 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pipex_utils.c                                   :+:      :+:    :+:   */
+/*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/18 09:10:28 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/05 14:20:03 by akuburas         ###   ########.fr       */
+/*   Created: 2023/11/26 13:25:09 by akuburas          #+#    #+#             */
+/*   Updated: 2024/01/05 14:25:37 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_pipex.h"
+#include "ft_printf.h"
 
-void	ft_free_substrings(char **arr_str)
+int	ft_putstr(char *string)
 {
 	int	i;
+	int	result;
 
-	i = 0;
-	while (arr_str[i])
+	result = 0;
+	if (string == NULL)
 	{
-		free(arr_str[i]);
-		arr_str[i] = NULL;
+		result = write(2, "(null)", 6);
+		if (result == -1)
+			return (-1);
+		return (6);
+	}
+	i = 0;
+	while (string[i])
+	{
+		result = ft_putchar(string[i]);
+		if (result == -1)
+			return (-1);
 		i++;
 	}
-	free(arr_str);
-	arr_str = NULL;
+	return (i);
 }
-
-
-
-

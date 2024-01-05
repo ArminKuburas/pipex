@@ -1,32 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pipex_utils.c                                   :+:      :+:    :+:   */
+/*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/18 09:10:28 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/05 14:20:03 by akuburas         ###   ########.fr       */
+/*   Created: 2023/11/26 13:23:43 by akuburas          #+#    #+#             */
+/*   Updated: 2024/01/05 14:25:29 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_pipex.h"
+#include "ft_printf.h"
 
-void	ft_free_substrings(char **arr_str)
+int	ft_putnbr(int n, int *length)
 {
-	int	i;
+	char	digit;
+	long	num;
 
-	i = 0;
-	while (arr_str[i])
+	num = (long)n;
+	if (num < 0)
 	{
-		free(arr_str[i]);
-		arr_str[i] = NULL;
-		i++;
+		if (write(1, "-", 1) == -1)
+			return (-1);
+		num = -num;
+		(*length) += 1;
 	}
-	free(arr_str);
-	arr_str = NULL;
+	if (n / 10)
+	{
+		if (ft_putnbr(num / 10, length) == -1)
+			return (-1);
+	}
+	digit = '0' + (num % 10);
+	if (write(2, &digit, 1) == -1)
+		return (-1);
+	(*length)++;
+	return (*length);
 }
-
-
-
-

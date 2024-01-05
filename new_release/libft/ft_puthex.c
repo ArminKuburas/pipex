@@ -1,32 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pipex_utils.c                                   :+:      :+:    :+:   */
+/*   ft_puthex.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/18 09:10:28 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/05 14:20:03 by akuburas         ###   ########.fr       */
+/*   Created: 2023/11/26 13:45:24 by akuburas          #+#    #+#             */
+/*   Updated: 2024/01/05 14:25:22 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_pipex.h"
+#include "ft_printf.h"
 
-void	ft_free_substrings(char **arr_str)
+int	ft_puthex(unsigned int nbr, int uppercase, int *length)
 {
-	int	i;
+	const char	*hex_digits;
 
-	i = 0;
-	while (arr_str[i])
+	if (uppercase == 0)
+		hex_digits = "0123456789abcdef";
+	else
+		hex_digits = "0123456789ABCDEF";
+	if (nbr >= 16)
 	{
-		free(arr_str[i]);
-		arr_str[i] = NULL;
-		i++;
+		if (ft_puthex(nbr / 16, uppercase, length) == -1)
+			return (-1);
 	}
-	free(arr_str);
-	arr_str = NULL;
+	(*length)++;
+	if (write(2, &(hex_digits[nbr % 16]), 1) == -1)
+		return (-1);
+	return (*length);
 }
-
-
-
-
