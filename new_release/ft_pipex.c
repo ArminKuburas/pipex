@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 12:54:37 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/05 15:08:28 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/05 15:24:50 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,6 @@ int	main(int argc, char *argv[], char **env)
 		exit_handler(1);
 	if (pid[0] == -1)
 		exit_handler(2);
-	if (pid[0] == 0)
-		child(argv, p_fd, env, &message);
 	forker_function(&message, pid, p_fd);
 	waitpid(pid1, &status, 0);
 	waitpid(pid2, &status, 0);

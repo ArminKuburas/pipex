@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 12:09:15 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/05 14:20:08 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/05 18:08:13 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,17 +62,6 @@ static char	*function_path_maker(char *terminal_function, char **all_paths)
 	return (NULL);
 }
 
-static int	access_checker(char *function)
-{
-	if (access(function, F_OK) == 0)
-	{
-		if (access(function, X_OK) == 0)
-			return (0);
-		return (2);
-	}
-	return (1);
-}
-
 static void	exit_path(char *function, int type)
 {
 	if (type == 2)
@@ -89,15 +78,25 @@ static void	exit_path(char *function, int type)
 		exit(1);
 	}
 }
-
-char	*ft_path_make(char *terminal_function, char **env)
+typedef struct s_handler
 {
-	char	**all_paths;
-	char	*function_path;
-	char	*path_str;
-	int		access_value;
+	int		amount;
+	int		fd_in;
+	int		fd_out;
+	int		in_error;
+	int		out_error;
+	int		signal_value;
+	char	*path[2];
+	int		values[2];
+}					t_handler;
 
-	access_value = access_checker(terminal_function);
+
+char	*ft_path_make(t_handler *message, char **argv, char **env, int argc)
+{
+	int	amount;
+
+	amount = argc - 2;
+	access_value_check()
 	if (access_value == 0)
 		return (terminal_function);
 	if (access_value == 2)

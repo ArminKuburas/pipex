@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:24:21 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/05 14:21:47 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/05 17:29:21 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,14 @@
 
 typedef struct s_handler
 {
-	int	fd_in;
-	int	fd_out;
-	int	in_error;
-	int	out_error;
-	int	signal_value;
-
+	int		amount;
+	int		fd_in;
+	int		fd_out;
+	int		in_error;
+	int		out_error;
+	int		signal_value;
+	char	*path[2];
+	int		values[2];
 }					t_handler;
 char	**ft_pipex_split(const char *s);
 void	ft_free_substrings(char **arr_str);
