@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 12:09:15 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/08 12:44:05 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/08 13:05:10 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,33 +38,6 @@ static char	*get_path(char *path_name, char **env)
 	return (NULL);
 }
 
-static char	*function_path_maker(char *terminal_function, char **all_paths)
-{
-	int		i;
-	char	*test_path;
-	char	*function_path;
-
-	i = 0;
-	while (all_paths[i])
-	{
-		test_path = ft_strjoin(all_paths[i], "/");
-		if (!test_path)
-			return (NULL);
-		function_path = ft_strjoin(test_path, terminal_function);
-		free(test_path);
-		if (!function_path)
-		{
-			# hmm
-			return (NULL);
-		}
-		if (access(function_path, F_OK | X_OK) == 0)
-			return (function_path);
-		free (function_path);
-		i++;
-	}
-	return (NULL);
-}
-
 static void	handle_access(char *function, t_handler *message)
 {
 	if (access(function, F_OK) == 0)
@@ -87,37 +60,46 @@ void	path_error_handler(char *function, t_handler *message, int type)
 		ft_printf("pipex: %s %s\n", strerror(13), function);
 		message->in_error = 1;
 	}
-	else if (type == 2)
+	else if (type == 2 && message->out_error == 0)
 	{
-		ft_printf("pipex: %s %s\n", strerror(13), argv[4]);
+		ft_printf("pipex: %s %s\n", strerror(13), function);
 		message->out_error = 126;
+	}
+	else if (type == 3 && message->in_error != 1)
+	{
+		ft_printf("pipex: command not found: %s\n", function);
+		message->in_error = 1;
+	}
+	else if (type == 4  && message->out_error == 0)
+	{
+		ft_printf("pipex: command not found: %s\n", function);
+		message->out_error = 127;
 	}
 }
 
-int find_path_helper(char **all_paths, t_handler *message, int i, int in_out, char *function)
+int	path_helper(char **all_paths, t_handler *message, int in_out, char *funct)
 {
-	char *test_path;
-	
-		while (all_paths[i])
+	char	*test_path;
+	int		i;
+
+	i = 0;
+	while (all_paths[i])
 	{
 		test_path = ft_strjoin(all_paths[i], "/");
 		if (!test_path)
 			exit (1);
-		message->path[in_out] = ft_strjoin(test_path, function);
-		if (!message->path[in_out])
+		message->path[in_out] = ft_strjoin(test_path, funct);
+		if (!(message->path[in_out]))
 			exit(1);
 		free(test_path);
-		handle_access(message->path[in_out], &message)
+		handle_access(message->path[in_out], &message);
 		if (message->path_error == 2)
-			return(1);
+			return (1);
 		free (message->path[in_out]);
 		if (message->path_error == 1 && in_out == 0)
-		{
-			path_error_handler(function, &message, 1);
-			return(1);
-		}
+			return (path_error_handler(funct, &message, 1), 1);
 		if (message->path_error == 1 && in_out == 1)
-			path_error_handler(function, &message, 2);
+			path_error_handler(funct, &message, 2);
 		i++;
 	}
 	return (0);
@@ -138,7 +120,7 @@ void	find_path(char *function, char **env, t_handler *message, int in_out)
 		return ;
 	}
 	all_paths = ft_split(path_str, ':');
-	helper_value = find_path_helper(all_paths, &message, i, in_out, function);
+	helper_value = path_helper(all_paths, &message, in_out, function);
 	if (helper_value == 1)
 		return ;
 	else if (helper_value == 0)
