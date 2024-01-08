@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 12:09:15 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/08 13:05:10 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/08 13:13:26 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,30 +51,6 @@ static void	handle_access(char *function, t_handler *message)
 		return ;
 	}
 	message->path_error = 0;
-}
-
-void	path_error_handler(char *function, t_handler *message, int type)
-{
-	if (type == 1 && message->in_error != 1)
-	{
-		ft_printf("pipex: %s %s\n", strerror(13), function);
-		message->in_error = 1;
-	}
-	else if (type == 2 && message->out_error == 0)
-	{
-		ft_printf("pipex: %s %s\n", strerror(13), function);
-		message->out_error = 126;
-	}
-	else if (type == 3 && message->in_error != 1)
-	{
-		ft_printf("pipex: command not found: %s\n", function);
-		message->in_error = 1;
-	}
-	else if (type == 4  && message->out_error == 0)
-	{
-		ft_printf("pipex: command not found: %s\n", function);
-		message->out_error = 127;
-	}
 }
 
 int	path_helper(char **all_paths, t_handler *message, int in_out, char *funct)
