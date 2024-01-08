@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 12:09:15 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/05 18:08:13 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/08 12:44:05 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,10 @@ static char	*function_path_maker(char *terminal_function, char **all_paths)
 		function_path = ft_strjoin(test_path, terminal_function);
 		free(test_path);
 		if (!function_path)
+		{
+			# hmm
 			return (NULL);
+		}
 		if (access(function_path, F_OK | X_OK) == 0)
 			return (function_path);
 		free (function_path);
@@ -62,51 +65,104 @@ static char	*function_path_maker(char *terminal_function, char **all_paths)
 	return (NULL);
 }
 
-static void	exit_path(char *function, int type)
+static void	handle_access(char *function, t_handler *message)
 {
-	if (type == 2)
+	if (access(function, F_OK) == 0)
 	{
-		ft_putstr_fd("pipex: permission denied: ", 2);
-		ft_putstr_fd(function, 2);
-		ft_putstr_fd("\n", 2);
-		exit(1);
+		if (access(function, X_OK) == 0)
+		{
+			message->path_error = 2;
+			return ;
+		}
+		message->path_error = 1;
+		return ;
 	}
-	if (type == 1)
+	message->path_error = 0;
+}
+
+void	path_error_handler(char *function, t_handler *message, int type)
+{
+	if (type == 1 && message->in_error != 1)
 	{
-		ft_putstr_fd(function, 2);
-		ft_putstr_fd(": No such file or directory\n", 2);
-		exit(1);
+		ft_printf("pipex: %s %s\n", strerror(13), function);
+		message->in_error = 1;
+	}
+	else if (type == 2)
+	{
+		ft_printf("pipex: %s %s\n", strerror(13), argv[4]);
+		message->out_error = 126;
 	}
 }
-typedef struct s_handler
+
+int find_path_helper(char **all_paths, t_handler *message, int i, int in_out, char *function)
 {
-	int		amount;
-	int		fd_in;
-	int		fd_out;
-	int		in_error;
-	int		out_error;
-	int		signal_value;
-	char	*path[2];
-	int		values[2];
-}					t_handler;
+	char *test_path;
+	
+		while (all_paths[i])
+	{
+		test_path = ft_strjoin(all_paths[i], "/");
+		if (!test_path)
+			exit (1);
+		message->path[in_out] = ft_strjoin(test_path, function);
+		if (!message->path[in_out])
+			exit(1);
+		free(test_path);
+		handle_access(message->path[in_out], &message)
+		if (message->path_error == 2)
+			return(1);
+		free (message->path[in_out]);
+		if (message->path_error == 1 && in_out == 0)
+		{
+			path_error_handler(function, &message, 1);
+			return(1);
+		}
+		if (message->path_error == 1 && in_out == 1)
+			path_error_handler(function, &message, 2);
+		i++;
+	}
+	return (0);
+}
 
-
-char	*ft_path_make(t_handler *message, char **argv, char **env, int argc)
+void	find_path(char *function, char **env, t_handler *message, int in_out)
 {
-	int	amount;
+	char	**all_paths;
+	int		i;
+	char	*path_str;
+	int		helper_value;
 
-	amount = argc - 2;
-	access_value_check()
-	if (access_value == 0)
-		return (terminal_function);
-	if (access_value == 2)
-		exit_path(terminal_function, 2);
+	i = 0;
 	path_str = get_path("PATH", env);
 	if (!path_str)
-		exit_path(terminal_function, 1);
+	{
+		ft_printf("pipex: command not found: %s\n", function);
+		return ;
+	}
 	all_paths = ft_split(path_str, ':');
-	function_path = function_path_maker(terminal_function, all_paths);
-	if (function_path == NULL)
-		return (NULL);
-	return (function_path);
+	helper_value = find_path_helper(all_paths, &message, i, in_out, function);
+	if (helper_value == 1)
+		return ;
+	else if (helper_value == 0)
+		message->path_error = 4;
+}
+
+void	function_path_maker(char **argv, char **env, t_handler *message)
+{
+	handle_access(argv[2], &message);
+	if (message->path_error == 1)
+		path_error_handler(argv[2], &message, 1);
+	else if (message->path_error == 2)
+		message->path[0] = argv[2];
+	else
+		find_path(argv[2], env, &message, 0);
+	if (message->path_error == 4)
+		path_error_handler(argv[2], &message, 3);
+	handle_access(argv[3], &message);
+	if (message->path_error == 1)
+		path_error_handler(argv[3], &message, 2);
+	else if (message->path_error == 2)
+		message->path[1] = argv[3];
+	else
+		find_path(argv[3], env, &message, 1);
+	if (message->path_error == 4)
+		path_error_handler(argv[2], &message, 4);
 }

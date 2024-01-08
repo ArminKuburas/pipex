@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 12:54:37 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/05 15:24:50 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/08 10:39:43 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,5 +90,5 @@ int	main(int argc, char *argv[], char **env)
 	forker_function(&message, pid, p_fd);
 	waitpid(pid1, &status, 0);
 	waitpid(pid2, &status, 0);
-	return (message->signal_value);
+	return (0);
 }
