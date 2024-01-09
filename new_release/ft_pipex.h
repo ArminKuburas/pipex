@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:24:21 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/09 10:14:44 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/09 12:51:05 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,10 @@
 
 typedef struct s_handler
 {
-	int		amount;
 	int		fd_in;
 	int		fd_out;
 	int		in_error;
 	int		out_error;
-	int		signal_value;
 	int		path_error;
 	char	*path[2];
 	pid_t	pid_one;
@@ -41,7 +39,7 @@ char	*ft_path_make(char *terminal_function, char **env);
 void	exit_handler(int type);
 void	function_path_maker(char **argv, char **env, t_handler *message);
 void	in_error_handler(int p_fd[]);
-void	message_handler(int argc, char **argv, char **env, t_handler *message);
+void	message_handler(char **argv, char **env, t_handler *message);
 void	path_error_handler(char *function, t_handler *message, int type);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 11:54:16 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/09 11:11:21 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/09 12:49:22 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,8 @@ static void	message_opener(char **argv, t_handler *message)
 	}
 }
 
-void	message_handler(int argc, char **argv, char **env, t_handler *message)
+void	message_handler(char **argv, char **env, t_handler *message)
 {
-	int	i;
-	int	amount;
-
-	i = 0;
-	amount = argc - 2;
 	initialize_message_handler(message);
 	message_opener(argv, message);
 	function_path_maker(argv, env, message);
