@@ -6,19 +6,17 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 12:54:37 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/09 02:21:38 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/09 09:18:34 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_pipex.h"
 
-static void	ft_execute(char *function, char **env)
+static void	ft_execute(char *path, char *function, char **env)
 {
 	char	**function_commands;
-	char	*path;
 
 	function_commands = ft_pipex_split(function);
-	path = ft_path_make(function_commands[0], env);
 	if (execve(path, function_commands, env) == -1)
 	{
 		ft_putstr_fd("pipex: command not found: ", 2);
@@ -30,46 +28,56 @@ static void	ft_execute(char *function, char **env)
 	}
 }
 
-static void	child(char **argv, int p_fd[], char **env)
+static void	child_one(t_handler *message, char **argv, int p_fd[], char **env)
 {
-	dup2(fd, 0);
-	close(fd);
+	dup2(message->fd_in, 0);
+	close(message->fd_in);
 	dup2(p_fd[1], 1);
 	close(p_fd[1]);
 	close(p_fd[0]);
-	ft_execute(argv[2], env);
+	ft_execute(message->path[0], argv[2], env);
 }
 
-static void	child_two(char **argv, int p_fd[], char **env)
+static void	child_two(t_handler *message, char **argv, int p_fd[], char **env)
 {
-	dup2(fd, 1);
-	close(fd);
+	dup2(message->fd_out, 1);
+	close(message->fd_out);
 	dup2(p_fd[0], 0);
 	close(p_fd[0]);
 	close(p_fd[1]);
-	ft_execute(argv[3], env);
+	ft_execute(message->path[1], argv[3], env);
 }
 
-static int	ft_fork_twice(int pid1, char **argv, char **env, int *p_fd)
+static void	forker_function(t_handler *message, char **env, char **argv)
 {
-	pid_t	pid2;
-	int		status;
+	int		p_fd[2];
 
-	pid2 = fork();
-	if (pid2 == -1)
-		exit(1);
-	if (pid2 == 0)
-		child_two(argv, p_fd, env);
+	if (pipe(p_fd) == -1)
+		exit_handler(1);
+	message->pid_one = fork();
+	if (message->pid_one == -1)
+		exit_handler(2);
+	else if (message->pid_one == 0)
+	{
+		if (message->in_error == 1)
+			in_error_handler(p_fd);
+		else
+			child_one(message, argv, p_fd, env);
+	}
 	else
 	{
-		close(p_fd[0]);
-		close(p_fd[1]);
+		message->pid_two = fork();
+		if (message->pid_two == -1)
+			exit_handler(2);
+		else if (message->pid_two == 0)
+			child_two(message, argv, p_fd, env);
+		else
+			return ;
 	}
 }
 
 int	main(int argc, char *argv[], char **env)
 {
-	int			p_fd[2];
 	t_handler	message;
 	int			status;
 
@@ -79,13 +87,10 @@ int	main(int argc, char *argv[], char **env)
 		exit(1);
 	}
 	message_handler(argc, argv, env, &message);
-	if (pipe(p_fd) == -1)
-		exit_handler(1);
-	
-	if (pid[0] == -1)
-		exit_handler(2);
-	forker_function(&message, pid, p_fd);
-	waitpid(pid1, &status, 0);
-	waitpid(pid2, &status, 0);
-	return (0);
+	forker_function(&message, env, argv);
+	if (waitpid(message.pid_one, &status, 0) == -1)
+		exit(1);
+	if (waitpid(message.pid_two, &status, 0) == -1)
+		exit(1);
+	return (message.out_error);
 }

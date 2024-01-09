@@ -6,11 +6,11 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 13:45:24 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/05 14:25:22 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/09 09:38:55 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
 int	ft_puthex(unsigned int nbr, int uppercase, int *length)
 {

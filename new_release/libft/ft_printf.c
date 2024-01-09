@@ -6,11 +6,11 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 11:19:11 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/05 14:24:30 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/09 09:38:08 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
 static int	my_formats(va_list *args, const char format)
 {

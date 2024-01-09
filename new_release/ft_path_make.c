@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 12:09:15 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/09 01:47:23 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/09 09:36:48 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,14 @@ int	path_helper(char **all_paths, t_handler *message, int in_out, char *funct)
 		if (!(message->path[in_out]))
 			exit(1);
 		free(test_path);
-		handle_access(message->path[in_out], &message);
+		handle_access(message->path[in_out], message);
 		if (message->path_error == 2)
 			return (1);
 		free (message->path[in_out]);
 		if (message->path_error == 1 && in_out == 0)
-			return (path_error_handler(funct, &message, 1), 1);
+			return (path_error_handler(funct, message, 1), 1);
 		if (message->path_error == 1 && in_out == 1)
-			path_error_handler(funct, &message, 2);
+			path_error_handler(funct, message, 2);
 		i++;
 	}
 	return (0);
@@ -96,7 +96,7 @@ void	find_path(char *function, char **env, t_handler *message, int in_out)
 		return ;
 	}
 	all_paths = ft_split(path_str, ':');
-	helper_value = path_helper(all_paths, &message, in_out, function);
+	helper_value = path_helper(all_paths, message, in_out, function);
 	if (helper_value == 1)
 		return ;
 	else if (helper_value == 0)
@@ -105,22 +105,22 @@ void	find_path(char *function, char **env, t_handler *message, int in_out)
 
 void	function_path_maker(char **argv, char **env, t_handler *message)
 {
-	handle_access(argv[2], &message);
+	handle_access(argv[2], message);
 	if (message->path_error == 1)
-		path_error_handler(argv[2], &message, 1);
+		path_error_handler(argv[2], message, 1);
 	else if (message->path_error == 2)
 		message->path[0] = argv[2];
 	else
-		find_path(argv[2], env, &message, 0);
+		find_path(argv[2], env, message, 0);
 	if (message->path_error == 4)
-		path_error_handler(argv[2], &message, 3);
-	handle_access(argv[3], &message);
+		path_error_handler(argv[2], message, 3);
+	handle_access(argv[3], message);
 	if (message->path_error == 1)
-		path_error_handler(argv[3], &message, 2);
+		path_error_handler(argv[3], message, 2);
 	else if (message->path_error == 2)
 		message->path[1] = argv[3];
 	else
-		find_path(argv[3], env, &message, 1);
+		find_path(argv[3], env, message, 1);
 	if (message->path_error == 4)
-		path_error_handler(argv[2], &message, 4);
+		path_error_handler(argv[2], message, 4);
 }

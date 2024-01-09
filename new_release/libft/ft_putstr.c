@@ -6,11 +6,11 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 13:25:09 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/05 14:25:37 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/09 09:39:05 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
 int	ft_putstr(char *string)
 {

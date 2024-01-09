@@ -6,11 +6,11 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 13:24:24 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/05 14:25:11 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/09 09:38:40 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
 int	ft_put_u_nbr(unsigned int n, int *length)
 {

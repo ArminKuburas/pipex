@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:24:21 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/09 02:01:04 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/09 09:36:29 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "libft/libft.h"
 # include <fcntl.h>
+# include <string.h>
 
 typedef struct s_handler
 {
@@ -33,5 +34,10 @@ char	**ft_pipex_split(const char *s);
 void	ft_free_substrings(char **arr_str);
 int		open_file(char *file, int in_or_out);
 char	*ft_path_make(char *terminal_function, char **env);
+void	exit_handler(int type);
+void	function_path_maker(char **argv, char **env, t_handler *message);
+void	in_error_handler(int p_fd[]);
+void	message_handler(int argc, char **argv, char **env, t_handler *message);
+void	path_error_handler(char *function, t_handler *message, int type);
 
 #endif

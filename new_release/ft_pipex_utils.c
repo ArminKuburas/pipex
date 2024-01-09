@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 09:10:28 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/09 02:19:09 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/09 09:36:15 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,19 @@ void	exit_handler(int type)
 {
 	if (type == 1)
 	{
-		
+		ft_printf("pipex: %s\n", strerror(32));
+		exit(1);
 	}
+	else if (type == 2)
+	{
+		ft_printf("pipex: %s\n", strerror(67));
+		exit(1);
+	}
+}
+
+void	in_error_handler(int p_fd[])
+{
+	close(p_fd[0]);
+	close(p_fd[1]);
+	exit(1);
 }

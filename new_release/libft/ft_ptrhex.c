@@ -6,11 +6,11 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 13:41:02 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/05 14:25:01 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/09 09:38:36 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
 int	ft_ptrhex(unsigned long ptr, int *length)
 {

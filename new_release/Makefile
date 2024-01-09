@@ -9,7 +9,10 @@ LIBFTDIR = libft
 LIBFT = $(LIBFTDIR)/libft.a
 SRCS = 	ft_pipex_split.c \
 		ft_pipex_utils.c \
-		ft_pipex.c
+		ft_pipex.c \
+		ft_message_handler.c \
+		ft_path_make.c
+	
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)

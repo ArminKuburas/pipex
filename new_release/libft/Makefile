@@ -6,7 +6,7 @@
 #    By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/27 08:04:40 by akuburas          #+#    #+#              #
-#    Updated: 2024/01/05 14:09:41 by akuburas         ###   ########.fr        #
+#    Updated: 2024/01/09 09:39:47 by akuburas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,7 +55,9 @@ SRCS = 	ft_atoi.c \
 		ft_putchar.c \
 		ft_puthex.c \
 		ft_putnbr.c \
-		ft_putstr.c
+		ft_putstr.c \
+		ft_printf.c
+
 
 OBJS = ${SRCS:.c=.o}
 
