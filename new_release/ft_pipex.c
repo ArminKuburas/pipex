@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 12:54:37 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/08 10:39:43 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/09 02:21:38 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ static void	ft_execute(char *function, char **env)
 
 static void	child(char **argv, int p_fd[], char **env)
 {
-
 	dup2(fd, 0);
 	close(fd);
 	dup2(p_fd[1], 1);
@@ -43,7 +42,6 @@ static void	child(char **argv, int p_fd[], char **env)
 
 static void	child_two(char **argv, int p_fd[], char **env)
 {
-
 	dup2(fd, 1);
 	close(fd);
 	dup2(p_fd[0], 0);
@@ -66,14 +64,12 @@ static int	ft_fork_twice(int pid1, char **argv, char **env, int *p_fd)
 	{
 		close(p_fd[0]);
 		close(p_fd[1]);
-
 	}
 }
 
 int	main(int argc, char *argv[], char **env)
 {
 	int			p_fd[2];
-	pid_t		pid[2];
 	t_handler	message;
 	int			status;
 
@@ -85,6 +81,7 @@ int	main(int argc, char *argv[], char **env)
 	message_handler(argc, argv, env, &message);
 	if (pipe(p_fd) == -1)
 		exit_handler(1);
+	
 	if (pid[0] == -1)
 		exit_handler(2);
 	forker_function(&message, pid, p_fd);

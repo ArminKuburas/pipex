@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 09:10:28 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/08 13:13:08 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/09 02:19:09 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,17 @@ void	path_error_handler(char *function, t_handler *message, int type)
 		ft_printf("pipex: command not found: %s\n", function);
 		message->in_error = 1;
 	}
-	else if (type == 4  && message->out_error == 0)
+	else if (type == 4 && message->out_error == 0)
 	{
 		ft_printf("pipex: command not found: %s\n", function);
 		message->out_error = 127;
 	}
 }
 
-
+void	exit_handler(int type)
+{
+	if (type == 1)
+	{
+		
+	}
+}

@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 12:09:15 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/08 13:13:26 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/09 01:47:23 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static char	*get_path(char *path_name, char **env)
 			j++;
 		path = ft_substr(env[i], 0, j);
 		if (path == NULL)
-			exit(-1);
+			exit(1);
 		if (ft_strcmp(path, path_name) == 0)
 		{
 			free(path);
