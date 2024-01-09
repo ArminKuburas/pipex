@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:24:21 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/09 12:51:05 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/09 13:03:27 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ typedef struct s_handler
 	pid_t	pid_two;
 	char	**function_commands_one;
 	char	**function_commands_two;
-
-
 }					t_handler;
 char	**ft_pipex_split(const char *s);
 void	ft_free_substrings(char **arr_str);
