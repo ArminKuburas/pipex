@@ -6,11 +6,12 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 12:54:37 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/09 09:18:34 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/09 11:23:18 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_pipex.h"
+#include <stdio.h>
 
 static void	ft_execute(char *path, char *function, char **env)
 {
@@ -19,9 +20,6 @@ static void	ft_execute(char *path, char *function, char **env)
 	function_commands = ft_pipex_split(function);
 	if (execve(path, function_commands, env) == -1)
 	{
-		ft_putstr_fd("pipex: command not found: ", 2);
-		ft_putstr_fd(function_commands[0], 2);
-		ft_putstr_fd("\n", 2);
 		ft_free_substrings(function_commands);
 		free(path);
 		exit(1);
@@ -36,6 +34,7 @@ static void	child_one(t_handler *message, char **argv, int p_fd[], char **env)
 	close(p_fd[1]);
 	close(p_fd[0]);
 	ft_execute(message->path[0], argv[2], env);
+	exit(1);
 }
 
 static void	child_two(t_handler *message, char **argv, int p_fd[], char **env)
@@ -46,6 +45,7 @@ static void	child_two(t_handler *message, char **argv, int p_fd[], char **env)
 	close(p_fd[0]);
 	close(p_fd[1]);
 	ft_execute(message->path[1], argv[3], env);
+	exit(1);
 }
 
 static void	forker_function(t_handler *message, char **env, char **argv)
@@ -61,8 +61,7 @@ static void	forker_function(t_handler *message, char **env, char **argv)
 	{
 		if (message->in_error == 1)
 			in_error_handler(p_fd);
-		else
-			child_one(message, argv, p_fd, env);
+		child_one(message, argv, p_fd, env);
 	}
 	else
 	{
@@ -71,8 +70,8 @@ static void	forker_function(t_handler *message, char **env, char **argv)
 			exit_handler(2);
 		else if (message->pid_two == 0)
 			child_two(message, argv, p_fd, env);
-		else
-			return ;
+		close(p_fd[0]);
+		close(p_fd[1]);
 	}
 }
 
@@ -81,16 +80,23 @@ int	main(int argc, char *argv[], char **env)
 	t_handler	message;
 	int			status;
 
+	status = 0;
 	if (argc != 5)
 	{
 		ft_putstr_fd("./pipex infile cmd cmd outfile\n", 2);
 		exit(1);
 	}
+	message.function_commands_one = ft_pipex_split(argv[2]);
+	message.function_commands_two = ft_pipex_split(argv[3]);
 	message_handler(argc, argv, env, &message);
 	forker_function(&message, env, argv);
 	if (waitpid(message.pid_one, &status, 0) == -1)
+	{
 		exit(1);
+	}
 	if (waitpid(message.pid_two, &status, 0) == -1)
+	{
 		exit(1);
+	}
 	return (message.out_error);
 }
