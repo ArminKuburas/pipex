@@ -6,12 +6,11 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 12:54:37 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/10 09:18:44 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/10 15:55:04 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_pipex.h"
-#include <stdio.h>
 
 static void	ft_execute(char *path, char *function, char **env)
 {
@@ -20,8 +19,8 @@ static void	ft_execute(char *path, char *function, char **env)
 	function_commands = ft_pipex_split(function);
 	if (execve(path, function_commands, env) == -1)
 	{
+		perror("execve");
 		ft_free_substrings(function_commands);
-		free(path);
 		exit(1);
 	}
 }
