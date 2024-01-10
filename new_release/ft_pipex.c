@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 12:54:37 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/10 07:52:42 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/10 09:18:44 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,11 @@ int	main(int argc, char *argv[], char **env)
 	{
 		exit(1);
 	}
+	if (message.out_error != 0)
+		return (message.out_error);
 	if (waitpid(message.pid_two, &status, 0) == -1)
 	{
 		exit(1);
 	}
-	return (message.out_error);
+	return (0);
 }
