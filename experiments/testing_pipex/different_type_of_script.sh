@@ -42,8 +42,8 @@ run_test "Test case: Basic test" "./pipex input 'ls -l' cat output" "output"
 run_test "Versus the terminal" "< input ls -l | cat > output2" "output"
 
 # Test case: Basic test 2: What if there is no input file?
-run_test "Test case: Basic test 2: What if there is no input file?" "./pipex input 'ls -l' 'echo hello' output" "output"
-run_test "Versus the terminal" "< input ls -l | echo hello > output2" "output"
+run_test "Test case: Basic test 2: What if there is no input file?" "./pipex input_wrong 'ls -l' 'echo hello' output" "output"
+run_test "Versus the terminal" "< input_wrong ls -l | echo hello > output2" "output"
 
 # Test case: Basic test 3: What if there is no output file?
 run_test "Test case: Basic test 3: What if there is no output file?" "./pipex input 'ls -l' 'echo hello' output3" "output3"
@@ -66,7 +66,7 @@ run_test "Test case: Basic test 4: Let's try a few different commands!" "./pipex
 run_test "Versus the terminal" "< input ls -l | wc -l > output2" "output"
 
 while true; do
-    read -p "Do you want to continue to the next test? (y/n): " answer
+    read -p "Do you want to try out the extreme tests? (y/n): " answer
     case $answer in
         [Yy]* ) break;;
         [Nn]* ) 
@@ -74,7 +74,7 @@ while true; do
 				continue;;
         * ) echo "Please enter 'y' for yes or 'n' for no.";;
     esac
-done
+done	
 
 # Extreme test 1: What happens if you try an input file whose permissions you do not have?
 run_test "Extreme test 1: What happens if you try an input file whose permissions you do not have?" "./pipex not_working_input 'ls' 'echo hello2' output" "output"
@@ -88,6 +88,9 @@ run_test "Versus the terminal" "< input ls | echo hello17 > not_working_output" 
 run_test "Extreme test 3: What happens if we change permissions while doing the pipe?" "./pipex input 'chmod 000 output' 'echo wow' output" "output"
 chmod 777 output
 run_test "Versus the terminal" "< input chmod 000 output | echo 'wow it still does it!' > output2" "output2"
+# Extreme test 4: Can you handle single quotes?
+run_test "Test case: Handling single quotes" "./pipex input 'awk '\''{print $1}'\'' cat' output" "output"
+run_test "Versus the terminal" "< input awk '{print $1}' | cat > output2" "output2"
 
 echo "Thats it! Now its time to test out how you handle a hostile environment and hostile functions!"
 # Clean up temporary files

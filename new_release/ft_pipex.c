@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 12:54:37 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/09 12:47:01 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/10 07:52:42 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,16 +63,16 @@ static void	forker_function(t_handler *message, char **env, char **argv)
 			in_error_handler(p_fd);
 		child_one(message, argv, p_fd, env);
 	}
-	else
+	else if (message->out_error == 0)
 	{
 		message->pid_two = fork();
 		if (message->pid_two == -1)
 			exit_handler(2);
 		else if (message->pid_two == 0)
 			child_two(message, argv, p_fd, env);
-		close(p_fd[0]);
-		close(p_fd[1]);
 	}
+	close(p_fd[0]);
+	close(p_fd[1]);
 }
 
 int	main(int argc, char *argv[], char **env)
