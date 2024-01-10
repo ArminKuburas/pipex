@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:24:21 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/09 13:03:27 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/10 05:07:17 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include "libft/libft.h"
 # include <fcntl.h>
 # include <string.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 
 typedef struct s_handler
 {

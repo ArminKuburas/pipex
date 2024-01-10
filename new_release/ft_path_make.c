@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 12:09:15 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/09 11:44:28 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/10 05:09:56 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	path_helper(char **all_paths, t_handler *message, int in_out, char *funct)
 			return (1);
 		free (message->path[in_out]);
 		if (message->path_error == 1 && in_out == 0)
-			return (path_error_handler(funct, message, 1), 1);
+			return (2);
 		if (message->path_error == 1 && in_out == 1)
 			path_error_handler(funct, message, 2);
 		i++;
@@ -84,11 +84,9 @@ int	path_helper(char **all_paths, t_handler *message, int in_out, char *funct)
 void	find_path(char *function, char **env, t_handler *message, int in_out)
 {
 	char	**all_paths;
-	int		i;
 	char	*path_str;
 	int		helper_value;
 
-	i = 0;
 	path_str = get_path("PATH", env);
 	if (!path_str)
 	{
@@ -99,6 +97,11 @@ void	find_path(char *function, char **env, t_handler *message, int in_out)
 	helper_value = path_helper(all_paths, message, in_out, function);
 	if (helper_value == 1)
 		return ;
+	else if (helper_value == 2)
+	{
+		path_error_handler(function, message, 1);
+		return ;
+	}
 	else if (helper_value == 0)
 		message->path_error = 4;
 }
