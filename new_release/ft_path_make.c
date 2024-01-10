@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 12:09:15 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/10 05:09:56 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/10 05:39:09 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,10 @@ void	find_path(char *function, char **env, t_handler *message, int in_out)
 	if (!path_str)
 	{
 		ft_printf("pipex: command not found: %s\n", function);
+		if (in_out == 1)
+			message->out_error = 127;
+		else
+			message->in_error = 1;
 		return ;
 	}
 	all_paths = ft_split(path_str, ':');
