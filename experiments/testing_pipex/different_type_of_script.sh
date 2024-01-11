@@ -1,29 +1,41 @@
 #!/bin/bash
 
+rm -f input not_working_input output output2 not_working_output output3 output4 test.sh not_working_test.sh permissions_denied_test.sh
+
+# ANSI color codes
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
+BLUE='\033[0;34m'
+PURPLE='\033[0;35m'
+CYAN='\033[0;36m'
 function run_test() {
     local test_name="$1"
     local command="$2"
 	local kitten="$3"
 
-    echo "Running test: $test_name"
-    echo "This is the command: $command"
+    echo "${YELLOW}Running test: ${BLUE}$test_name${NC}"
+    echo "${YELLOW}This is the command: ${BLUE}$command${PURPLE}"
     eval "$command"
-	echo $?
-	echo "That above me is the exit value"
+	exit_code=$?
+	echo "${YELLOW}Exit value: $exit_code${NC}"
 	if [ -n "$kitten" ]; then
-		echo "Now let us do: cat $kitten"
+		echo "${YELLOW}Now let us do: cat ${BLUE}$kitten${PURPLE}"
     	cat "$kitten"
 	fi
+	echo "${BLUE}------------------------------------------------------------------------------------------------------------------------------------------------------------${NC}"
 	while true; do
-    	read -p "Do you want to continue to the next test? (y/n): " answer
+		printf "${YELLOW}Do you want to continue to the next test? (y/n): ${NC}" 
+    	read answer
     	case $answer in
         	[Yy]* ) break;;
         	[Nn]* )
-				echo "oops must of been a typo!" 
-				continue;;
-        	* ) echo "Please enter 'y' for yes or 'n' for no.";;
+				echo "${RED}Aww I'm sad to see you go! Exitting now...${NC}"
+				 rm -f input not_working_input output output2 not_working_output output3 output4 test.sh not_working_test.sh permissions_denied_test.sh
+				exit 0;;
+        	* ) echo "${RED}Please enter 'y' for yes or 'n' for no.${NC}";;
     esac
-	echo "------------------------------------------------------------------------------------------------------------------------------------------------------------"
 done
 }
 
@@ -83,25 +95,28 @@ run_test "Versus the terminal" "< input ls -l | wc -l > output2" "output2"
 
 # Test case: Basic test 5: What if I include the path to the function directly?
 run_test "Test case: Basic test 5: What if I include the path to the function directly?" "./pipex input /bin/ls cat output" "output"
-run_test "Versus the terminal" "< input /bin/ls | cat output2" "output2"
+run_test "Versus the terminal" "< input /bin/ls | cat > output2" "output2"
 
 # Test case: Basic test 6: What happens if we include command options while including the path directly?
-run_test "Test case: Basic test 6: What happens if we include command options while including the path directly?" "./pipex input "/bin/ls -l" cat output" "output"
-run_test "Versus the terminal" "< input /bin/ls -l | cat output2" "output2"
+run_test "Test case: Basic test 6: What happens if we include command options while including the path directly?" "./pipex input '/bin/ls -l' cat output" "output"
+run_test "Versus the terminal" "< input /bin/ls -l | cat > output2" "output2"
 
-echo "That concludes the basic tests!"
-echo "------------------------------------------------------------------------------------------------------------------------------------------------------------"
+echo "${GREEN}That concludes the basic tests!${NC}"
+echo "${PURPLE}------------------------------------------------------------------------------------------------------------------------------------------------------------"
 
-while true; do
-    read -p "Do you want to try out the extreme tests? (y/n): " answer
-    case $answer in
-        [Yy]* ) break;;
-        [Nn]* ) 
-				echo "oops must of been a typo!"
-				continue;;
-        * ) echo "Please enter 'y' for yes or 'n' for no.";;
+	while true; do
+		printf "${CYAN}Do you want to try the extreme tests? (y/n): ${NC}" 
+    	read answer
+    	case $answer in
+        	[Yy]* ) break;;
+        	[Nn]* )
+				echo "${RED}Fearing failure and avoiding challenges only delays the inevitable. Embrace the tests, for they are the stepping stones to mastery and success. It's through overcoming challenges that we truly learn and grow.${NC}"
+				 rm -f input not_working_input output output2 not_working_output output3 output4 test.sh not_working_test.sh permissions_denied_test.sh
+				exit 0;;
+        	* ) echo "${RED}Please enter 'y' for yes or 'n' for no.${NC}";;
     esac
-done	
+done
+
 
 # Extreme test 1: What happens if you try an input file whose permissions you do not have?
 run_test "Extreme test 1: What happens if you try an input file whose permissions you do not have?" "./pipex not_working_input 'ls' 'echo hello2' output" "output"
