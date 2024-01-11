@@ -6,10 +6,12 @@ function run_test() {
 	local kitten="$3"
 
     echo "Running test: $test_name"
-    echo "$command"
+    echo "This is the command: $command"
     eval "$command"
 	echo $?
+	echo "That above me is the exit value"
 	if [ -n "$kitten" ]; then
+		echo "Now let us do: cat $kitten"
     	cat "$kitten"
 	fi
 	while true; do
@@ -21,17 +23,31 @@ function run_test() {
 				continue;;
         	* ) echo "Please enter 'y' for yes or 'n' for no.";;
     esac
+	echo "------------------------------------------------------------------------------------------------------------------------------------------------------------"
 done
 }
 
 # Create input files
 echo "This is a test input file." > input
 echo "Another test input." > not_working_input
+echo "hello" >> input
+echo "hello" >> input
+echo "hello" >> input
+echo "goodbye" >> input
+
 chmod 000 not_working_input
 
 # Create output files
 touch output output2 not_working_output
 chmod 000 not_working_output
+
+# Create executable files
+touch test.sh not_working_test.sh permissions_denied_test.sh
+chmod 777 test.sh
+chmod 777 not_working_test.sh
+echo "#!/bin/bash" > test.sh
+echo "ls" >> test.sh
+echo "ls" > not_working_test.sh
 
 # Test case: Ensure pipex takes exactly 5 inputs
 run_test "Test case: Ensure pipex takes exactly 5 inputs" "./pipex 1 2 3"
@@ -63,7 +79,18 @@ run_test "Test case: Basic test 4: Let's try a few different commands!" "./pipex
 run_test "Versus the terminal" "< input grep hello | wc -l > output2" "output2"
 
 run_test "Test case: Basic test 4: Let's try a few different commands!" "./pipex input 'ls -l' 'wc -l' output" "output"
-run_test "Versus the terminal" "< input ls -l | wc -l > output2" "output"
+run_test "Versus the terminal" "< input ls -l | wc -l > output2" "output2"
+
+# Test case: Basic test 5: What if I include the path to the function directly?
+run_test "Test case: Basic test 5: What if I include the path to the function directly?" "./pipex input /bin/ls cat output" "output"
+run_test "Versus the terminal" "< input /bin/ls | cat output2" "output2"
+
+# Test case: Basic test 6: What happens if we include command options while including the path directly?
+run_test "Test case: Basic test 6: What happens if we include command options while including the path directly?" "./pipex input "/bin/ls -l" cat output" "output"
+run_test "Versus the terminal" "< input /bin/ls -l | cat output2" "output2"
+
+echo "That concludes the basic tests!"
+echo "------------------------------------------------------------------------------------------------------------------------------------------------------------"
 
 while true; do
     read -p "Do you want to try out the extreme tests? (y/n): " answer
@@ -87,11 +114,27 @@ run_test "Versus the terminal" "< input ls | echo hello17 > not_working_output" 
 # Extreme test 3: What happens if we change permissions while doing the pipe?
 run_test "Extreme test 3: What happens if we change permissions while doing the pipe?" "./pipex input 'chmod 000 output' 'echo wow' output" "output"
 chmod 777 output
-run_test "Versus the terminal" "< input chmod 000 output | echo 'wow it still does it!' > output2" "output2"
+echo "I just changed the outputs permissions back to 777 so that we can see whats inside"
+cat output
+run_test "Versus the terminal" "< input chmod 000 output2 | echo 'wow it still does it!' > output2" "output2"
+chmod 777 output2
+echo "I just changed the output2s permissions back to 777 so that we can see whats inside"
+cat output2
 # Extreme test 4: Can you handle single quotes?
-run_test "Test case: Handling single quotes" "./pipex input 'awk '\''{print $1}'\'' cat' output" "output"
+run_test "Extreme test 4: Handling single quotes" "./pipex input 'awk '\''{print $1}'\'' cat' output" "output"
 run_test "Versus the terminal" "< input awk '{print $1}' | cat > output2" "output2"
 
-echo "Thats it! Now its time to test out how you handle a hostile environment and hostile functions!"
+# Extreme test 5: Can you handle executables not located within the path env variable?
+run_test "Extreme test 5: Can you handle executables not located within the path env variable?" "./pipex input ./test.sh cat output" "output"
+run_test "Versus the terminal" "< input ./test.sh | cat > output2" "output2"
+
+# Extreme test 6: Can you handle executables not located within the path env variable that you also do not have permission to use?
+run_test "Extreme test 6: Can you handle executables not located within the path env variable that you also do not have permission to use?" "./pipex input ls ./permissions_denied_test.sh output" "output"
+run_test "Versus the terminal" "< input ls | ./permissions_denied_test.sh > output2" "output2"
+
+# Extreme test 7: Can you handle executables not located within the path env variable that also do not work with execve?
+run_test "Extreme test 7: Can you handle executables not located within the path env variable that also do not work with execve?" "./pipex input ls ./not_working_test.sh  output" "output"
+run_test "Versus the terminal" "< input ls | ./not_working_test.sh > output2" "output2"
+echo "Thats it for all the extreme cases. Now lets handle an environment that does not contain the PATH variable!"
 # Clean up temporary files
-rm -f input not_working_input output output2 not_working_output output3 output4
+rm -f input not_working_input output output2 not_working_output output3 output4 test.sh not_working_test.sh permissions_denied_test.sh

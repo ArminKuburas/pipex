@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 15:40:19 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/11 08:17:10 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/11 09:12:20 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,6 @@ char	*ft_strdup(const char *s)
 		ft_memcpy(new_str, s, len);
 	}
 	else
-		return (NULL);
+		exit(1);
 	return (new_str);
 }

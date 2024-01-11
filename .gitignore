@@ -55,3 +55,6 @@ object_files
 bonus_object_files
 pipex
 .bonus
+input
+output
+output2
