@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 12:09:15 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/11 09:05:20 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/11 09:22:34 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,9 +119,9 @@ void	function_path_maker(char **argv, char **env, t_handler *message)
 		handle_access(argv[2], message);
 	if (message->path_error == 1)
 		path_error_handler(argv[2], message, 1);
-	else if (message->path_error == 2)
+	else if (message->path_error == 2 && !message->path[0])
 		message->path[0] = ft_strdup(argv[2]);
-	else
+	else if ((message->path_error != 2))
 		find_path(message->function_commands_one[0], env, message, 0);
 	if (message->path_error == 4)
 		path_error_handler(message->function_commands_one[0], message, 3);
@@ -131,9 +131,9 @@ void	function_path_maker(char **argv, char **env, t_handler *message)
 	handle_access(argv[3], message);
 	if (message->path_error == 1)
 		path_error_handler(message->function_commands_one[0], message, 2);
-	else if (message->path_error == 2)
+	else if (message->path_error == 2 && !message->path[1])
 		message->path[1] = ft_strdup(argv[3]);
-	else
+	else if (message->path_error != 2)
 		find_path(message->function_commands_two[0], env, message, 1);
 	if (message->path_error == 4)
 		path_error_handler(message->function_commands_two[0], message, 4);

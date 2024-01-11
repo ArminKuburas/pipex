@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 11:50:09 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/10 15:10:29 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/11 09:15:37 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 
 int	main()
 {
-	const	char 	*program_path = "./test.sh";
-	char *const		argv[] = { "./test.sh", NULL };
+	const	char 	*program_path = "/bin/ls";
+	char *const		argv[] = { "/bin/ls", "-l", NULL };
 	char *const envp[] = { NULL };
 
 	if (execve(program_path, argv, envp) == -1)
