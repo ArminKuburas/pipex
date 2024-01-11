@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 12:54:37 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/10 15:55:04 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/11 08:27:46 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static void	ft_execute(char *path, char *function, char **env)
 	{
 		perror("execve");
 		ft_free_substrings(function_commands);
+		free(path);
 		exit(1);
 	}
 }
