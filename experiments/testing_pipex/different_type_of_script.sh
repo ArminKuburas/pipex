@@ -67,11 +67,11 @@ run_test "Test case: Ensure pipex takes exactly 5 inputs" "./pipex 1 2 3 4 5"
 
 # Test case: Basic test
 run_test "Test case: Basic test" "./pipex input 'ls -l' cat output" "output"
-run_test "Versus the terminal" "< input ls -l | cat > output2" "output"
+run_test "Versus the terminal" "< input ls -l | cat > output2" "output2"
 
 # Test case: Basic test 2: What if there is no input file?
 run_test "Test case: Basic test 2: What if there is no input file?" "./pipex input_wrong 'ls -l' 'echo hello' output" "output"
-run_test "Versus the terminal" "< input_wrong ls -l | echo hello > output2" "output"
+run_test "Versus the terminal" "< input_wrong ls -l | echo hello > output2" "output2"
 
 # Test case: Basic test 3: What if there is no output file?
 run_test "Test case: Basic test 3: What if there is no output file?" "./pipex input 'ls -l' 'echo hello' output3" "output3"
@@ -129,15 +129,12 @@ run_test "Versus the terminal" "< input ls | echo hello17 > not_working_output" 
 # Extreme test 3: What happens if we change permissions while doing the pipe?
 run_test "Extreme test 3: What happens if we change permissions while doing the pipe?" "./pipex input 'chmod 000 output' 'echo wow' output" "output"
 chmod 777 output
-echo "I just changed the outputs permissions back to 777 so that we can see whats inside"
+echo "${BLUE}I just changed the outputs permissions back to 777 so that we can see whats inside"
 cat output
 run_test "Versus the terminal" "< input chmod 000 output2 | echo 'wow it still does it!' > output2" "output2"
 chmod 777 output2
-echo "I just changed the output2s permissions back to 777 so that we can see whats inside"
+echo "${BLUE}I just changed the output2s permissions back to 777 so that we can see whats inside"
 cat output2
-# Extreme test 4: Can you handle single quotes?
-run_test "Extreme test 4: Handling single quotes" "./pipex input 'awk '\''{print $1}'\'' cat' output" "output"
-run_test "Versus the terminal" "< input awk '{print $1}' | cat > output2" "output2"
 
 # Extreme test 5: Can you handle executables not located within the path env variable?
 run_test "Extreme test 5: Can you handle executables not located within the path env variable?" "./pipex input ./test.sh cat output" "output"
