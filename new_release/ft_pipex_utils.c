@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 09:10:28 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/15 13:28:50 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/15 13:45:09 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,11 @@ void	exit_handler(int type)
 		ft_printf("pipex: %s\n", strerror(67));
 		exit(-1);
 	}
+	else if (type == 3)
+	{
+		ft_printf("pipex: waitpid error\n");
+		exit(-1);
+	}
 }
 
 void	in_error_handler(int p_fd[])
@@ -79,7 +84,13 @@ void	ft_freeing_message(t_handler *message)
 	if (message->function_commands_two)
 		ft_free_substrings(message->function_commands_two);
 	if (message->path[0])
+	{
 		free(message->path[0]);
+		message->path[0] = NULL;
+	}
 	if (message->path[1])
+	{
 		free(message->path[1]);
+		message->path[1] = NULL;
+	}
 }

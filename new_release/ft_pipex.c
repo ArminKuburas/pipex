@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 12:54:37 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/15 13:29:45 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/15 13:40:17 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	ft_execute(t_handler *message, char **env, int in_out)
 	exit(-1);
 }
 
-static void	child_one(t_handler *message, char **argv, int p_fd[], char **env)
+static void	child_one(t_handler *message, int p_fd[], char **env)
 {
 	dup2(message->fd_in, 0);
 	close(message->fd_in);
@@ -31,11 +31,12 @@ static void	child_one(t_handler *message, char **argv, int p_fd[], char **env)
 	close(p_fd[1]);
 	close(p_fd[0]);
 	free(message->path[1]);
+	message->path[1] = NULL;
 	ft_free_substrings(message->function_commands_two);
 	ft_execute(message, env, 1);
 }
 
-static void	child_two(t_handler *message, char **argv, int p_fd[], char **env)
+static void	child_two(t_handler *message, int p_fd[], char **env)
 {
 	dup2(message->fd_out, 1);
 	close(message->fd_out);
@@ -43,11 +44,12 @@ static void	child_two(t_handler *message, char **argv, int p_fd[], char **env)
 	close(p_fd[0]);
 	close(p_fd[1]);
 	free(message->path[0]);
+	message->path[0] = NULL;
 	ft_free_substrings(message->function_commands_one);
 	ft_execute(message, env, 2);
 }
 
-static void	forker_function(t_handler *message, char **env, char **argv)
+static void	forker_function(t_handler *message, char **env)
 {
 	int		p_fd[2];
 
@@ -60,7 +62,7 @@ static void	forker_function(t_handler *message, char **env, char **argv)
 	{
 		if (message->in_error == 1)
 			in_error_handler(p_fd);
-		child_one(message, argv, p_fd, env);
+		child_one(message, p_fd, env);
 	}
 	else if (message->out_error == 0)
 	{
@@ -68,7 +70,7 @@ static void	forker_function(t_handler *message, char **env, char **argv)
 		if (message->pid_two == -1)
 			exit_handler(2);
 		else if (message->pid_two == 0)
-			child_two(message, argv, p_fd, env);
+			child_two(message, p_fd, env);
 	}
 	close(p_fd[0]);
 	close(p_fd[1]);
@@ -89,16 +91,16 @@ int	main(int argc, char *argv[], char **env)
 	message.function_commands_one = ft_pipex_split(argv[2]);
 	message.function_commands_two = ft_pipex_split(argv[3]);
 	message_handler(argv, env, &message);
-	forker_function(&message, env, argv);
+	forker_function(&message, env);
 	if (waitpid(message.pid_one, &status, 0) == -1)
 	{
-		exit(1);
+		exit_handler(3);
 	}
 	if (message.out_error != 0)
 		return (message.out_error);
 	if (waitpid(message.pid_two, &status, 0) == -1)
 	{
-		exit(1);
+		exit_handler(3);
 	}
 	return (0);
 }
