@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 09:10:28 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/15 13:45:09 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/15 14:57:36 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,15 @@ void	in_error_handler(int p_fd[])
 void	ft_freeing_message(t_handler *message)
 {
 	if (message->function_commands_one)
-		ft_free_substrings(message->function_commands_one);
+	{
+		if (message->function_commands_one[0])
+			ft_free_substrings(message->function_commands_one);
+	}
 	if (message->function_commands_two)
-		ft_free_substrings(message->function_commands_two);
+	{
+		if (message->function_commands_two[0])
+			ft_free_substrings(message->function_commands_two);
+	}
 	if (message->path[0])
 	{
 		free(message->path[0]);
@@ -93,4 +99,5 @@ void	ft_freeing_message(t_handler *message)
 		free(message->path[1]);
 		message->path[1] = NULL;
 	}
+
 }
