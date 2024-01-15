@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 09:10:28 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/15 14:57:36 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/15 15:11:26 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,5 +99,4 @@ void	ft_freeing_message(t_handler *message)
 		free(message->path[1]);
 		message->path[1] = NULL;
 	}
-
 }
