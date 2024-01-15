@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 09:10:28 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/10 07:56:35 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/15 13:28:50 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,12 @@ void	exit_handler(int type)
 	if (type == 1)
 	{
 		ft_printf("pipex: %s\n", strerror(32));
-		exit(1);
+		exit(-1);
 	}
 	else if (type == 2)
 	{
 		ft_printf("pipex: %s\n", strerror(67));
-		exit(1);
+		exit(-1);
 	}
 }
 
@@ -70,4 +70,16 @@ void	in_error_handler(int p_fd[])
 	close(p_fd[0]);
 	close(p_fd[1]);
 	exit(1);
+}
+
+void	ft_freeing_message(t_handler *message)
+{
+	if (message->function_commands_one)
+		ft_free_substrings(message->function_commands_one);
+	if (message->function_commands_two)
+		ft_free_substrings(message->function_commands_two);
+	if (message->path[0])
+		free(message->path[0]);
+	if (message->path[1])
+		free(message->path[1]);
 }

@@ -6,24 +6,21 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 12:54:37 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/11 09:22:58 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/15 13:29:45 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_pipex.h"
 
-static void	ft_execute(char *path, char *function, char **env)
+static void	ft_execute(t_handler *message, char **env, int in_out)
 {
-	char	**function_commands;
-
-	function_commands = ft_pipex_split(function);
-	if (execve(path, function_commands, env) == -1)
-	{
-		perror("execve");
-		ft_free_substrings(function_commands);
-		free(path);
-		exit(1);
-	}
+	if (in_out == 1)
+		execve(message->path[0], message->function_commands_one, env);
+	else if (in_out == 2)
+		execve(message->path[1], message->function_commands_two, env);
+	perror("execve");
+	ft_freeing_message(message);
+	exit(-1);
 }
 
 static void	child_one(t_handler *message, char **argv, int p_fd[], char **env)
@@ -33,8 +30,9 @@ static void	child_one(t_handler *message, char **argv, int p_fd[], char **env)
 	dup2(p_fd[1], 1);
 	close(p_fd[1]);
 	close(p_fd[0]);
-	ft_execute(message->path[0], argv[2], env);
-	exit(1);
+	free(message->path[1]);
+	ft_free_substrings(message->function_commands_two);
+	ft_execute(message, env, 1);
 }
 
 static void	child_two(t_handler *message, char **argv, int p_fd[], char **env)
@@ -44,8 +42,9 @@ static void	child_two(t_handler *message, char **argv, int p_fd[], char **env)
 	dup2(p_fd[0], 0);
 	close(p_fd[0]);
 	close(p_fd[1]);
-	ft_execute(message->path[1], argv[3], env);
-	exit(1);
+	free(message->path[0]);
+	ft_free_substrings(message->function_commands_one);
+	ft_execute(message, env, 2);
 }
 
 static void	forker_function(t_handler *message, char **env, char **argv)
@@ -73,6 +72,7 @@ static void	forker_function(t_handler *message, char **env, char **argv)
 	}
 	close(p_fd[0]);
 	close(p_fd[1]);
+	ft_freeing_message(message);
 }
 
 int	main(int argc, char *argv[], char **env)
