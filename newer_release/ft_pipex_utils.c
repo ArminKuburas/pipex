@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 09:10:28 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/16 12:00:13 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/16 17:50:01 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,28 +51,26 @@ void	path_error_handler(char *function, t_handler *message, int type)
 	}
 }
 
-void	exit_handler(int type)
+void	exit_handler(int type, t_handler *message)
 {
 	if (type == 1)
 	{
 		ft_printf("pipex: %s\n", strerror(32));
-		exit(-1);
 	}
 	else if (type == 2)
 	{
 		ft_printf("pipex: %s\n", strerror(67));
-		exit(-1);
 	}
 	else if (type == 3)
 	{
 		ft_printf("pipex: waitpid error\n");
-		exit(-1);
 	}
 	else if (type == 4)
 	{
 		ft_printf("pipex: malloc error\n");
-		exit(-1);
 	}
+	ft_freeing_message(message);
+	exit (-1);
 }
 
 void	in_error_handler(int p_fd[])

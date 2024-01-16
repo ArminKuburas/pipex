@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:24:21 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/16 11:21:17 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/16 14:59:22 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,6 @@ void	in_error_handler(int p_fd[]);
 void	message_handler(char **argv, char **env, t_handler *message);
 void	path_error_handler(char *function, t_handler *message, int type);
 void	ft_freeing_message(t_handler *message);
+void	handle_access(char *function, t_handler *message);
 
 #endif

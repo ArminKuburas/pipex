@@ -1,29 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   testing_if_statements.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/26 15:40:19 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/16 17:04:15 by akuburas         ###   ########.fr       */
+/*   Created: 2024/01/16 17:24:09 by akuburas          #+#    #+#             */
+/*   Updated: 2024/01/16 17:25:17 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <stdio.h>
 
-char	*ft_strdup(const char *s)
+int	main(void)
 {
-	size_t	len;
-	char	*new_str;
+	char	*ptr;
 
-	len = ft_strlen(s);
-	new_str = (char *)ft_calloc(len + 1, sizeof(char));
-	if (new_str)
-	{
-		ft_memcpy(new_str, s, len);
-	}
+	if (!ptr)
+		printf("oops");
 	else
-		return (NULL);
-	return (new_str);
+		printf("yay!");
 }

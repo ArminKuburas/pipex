@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 12:54:37 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/15 18:58:37 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/16 17:57:00 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,14 @@ static void	ft_execute(t_handler *message, char **env, int in_out)
 	if (in_out == 1)
 	{
 		execve(message->path[0], message->function_commands_one, env);
-		ft_printf("pipex: %s: %s\n", strerror(errno), \
-			message->function_commands_one[0]);
+
 	}
 	else if (in_out == 2)
 	{
 		execve(message->path[1], message->function_commands_two, env);
-		ft_printf("pipex: %s: %s\n", strerror(errno), \
-			message->function_commands_two[0]);
 	}
 	ft_freeing_message(message);
-	exit(-1);
+	exit(EXIT_FAILURE);
 }
 
 static void	child_one(t_handler *message, int p_fd[], char **env)
@@ -64,7 +61,7 @@ static void	forker_function(t_handler *message, char **env)
 		exit_handler(1);
 	message->pid_one = fork();
 	if (message->pid_one == -1)
-		exit_handler(2);
+		exit_handler(2, message);
 	else if (message->pid_one == 0)
 	{
 		if (message->in_error == 1)
@@ -75,7 +72,7 @@ static void	forker_function(t_handler *message, char **env)
 	{
 		message->pid_two = fork();
 		if (message->pid_two == -1)
-			exit_handler(2);
+			exit_handler(2, message);
 		else if (message->pid_two == 0)
 			child_two(message, p_fd, env);
 	}
@@ -95,19 +92,20 @@ int	main(int argc, char *argv[], char **env)
 		ft_putstr_fd("./pipex infile cmd cmd outfile\n", 2);
 		exit(1);
 	}
-	message.function_commands_one = ft_pipex_split(argv[2]);
-	message.function_commands_two = ft_pipex_split(argv[3]);
+	message.function_commands_one = ft_pipex_split(argv[2], &message);
+	message.function_commands_two = ft_pipex_split(argv[3], &message);
 	message_handler(argv, env, &message);
 	forker_function(&message, env);
+	waiting_function(&message);
 	if (waitpid(message.pid_one, &status, 0) == -1)
 	{
-		exit_handler(3);
+		exit_handler(3, &message);
 	}
 	if (message.out_error != 0)
 		return (message.out_error);
 	if (waitpid(message.pid_two, &status, 0) == -1)
 	{
-		exit_handler(3);
+		exit_handler(3, &message);
 	}
 	return (0);
 }

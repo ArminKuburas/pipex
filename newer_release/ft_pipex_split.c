@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 13:28:10 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/15 18:44:42 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/16 17:57:17 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ static char	*extract_word(const char *s, int *index)
 	return (ft_strndup(s + start, end - start));
 }
 
-char	**ft_pipex_split(const char *s)
+char	**ft_pipex_split(const char *s, t_handler *message)
 {
 	char	**result;
 	int		count;
@@ -98,7 +98,7 @@ char	**ft_pipex_split(const char *s)
 	count = count_words(s);
 	result = (char **)malloc((count + 1) * sizeof(char *));
 	if (!result)
-		return (NULL);
+		exit_handler(4, message);
 	i = 0;
 	j = 0;
 	while (j < count)
@@ -107,7 +107,7 @@ char	**ft_pipex_split(const char *s)
 		if (!result[j])
 		{
 			ft_free_substrings(&result);
-			return (NULL);
+			exit_handler(4, message);
 		}
 		j++;
 	}

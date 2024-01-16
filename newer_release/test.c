@@ -1,29 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/26 15:40:19 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/16 17:04:15 by akuburas         ###   ########.fr       */
+/*   Created: 2024/01/16 15:13:50 by akuburas          #+#    #+#             */
+/*   Updated: 2024/01/16 15:30:16 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <stdio.h>
 
-char	*ft_strdup(const char *s)
+int	main(void)
 {
-	size_t	len;
-	char	*new_str;
-
-	len = ft_strlen(s);
-	new_str = (char *)ft_calloc(len + 1, sizeof(char));
-	if (new_str)
-	{
-		ft_memcpy(new_str, s, len);
-	}
-	else
-		return (NULL);
-	return (new_str);
+	char *str = NULL;
+	printf("This wont work. %s", str);
+	return (0);
 }
