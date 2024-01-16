@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:24:21 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/16 14:59:22 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/16 18:17:24 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ typedef struct s_handler
 	char	**function_commands_one;
 	char	**function_commands_two;
 }					t_handler;
-char	**ft_pipex_split(const char *s);
+char	**ft_pipex_split(const char *s, t_handler *message);
 void	ft_free_substrings(char ***arr_str);
 int		open_file(char *file, int in_or_out);
 char	*ft_path_make(char *terminal_function, char **env);
-void	exit_handler(int type);
-void	function_path_maker(char **argv, char **env, t_handler *message);
+void	exit_handler(int type, t_handler *message);
+void	function_path_maker(char **env, t_handler *message);
 void	in_error_handler(int p_fd[]);
 void	message_handler(char **argv, char **env, t_handler *message);
 void	path_error_handler(char *function, t_handler *message, int type);
