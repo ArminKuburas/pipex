@@ -1,6 +1,6 @@
-#!/bin/bash
+#!/bin/zsh
 
-rm -f input not_working_input output output2 not_working_output output3 output4 test.sh not_working_test.sh permissions_denied_test.sh
+rm -Rf input not_working_input output output2 not_working_output output3 output4 test.sh not_working_test.sh permissions_denied_test.sh directory
 
 # ANSI color codes
 RED='\033[0;31m'
@@ -32,7 +32,7 @@ function run_test() {
         	[Yy]* ) break;;
         	[Nn]* )
 				echo "${RED}Aww I'm sad to see you go! Exitting now...${NC}"
-				 rm -f input not_working_input output output2 not_working_output output3 output4 test.sh not_working_test.sh permissions_denied_test.sh
+				 rm -Rf input not_working_input output output2 not_working_output output3 output4 test.sh not_working_test.sh permissions_denied_test.sh directory
 				exit 0;;
         	* ) echo "${RED}Please enter 'y' for yes or 'n' for no.${NC}";;
     esac
@@ -60,6 +60,9 @@ chmod 777 not_working_test.sh
 echo "#!/bin/bash" > test.sh
 echo "ls" >> test.sh
 echo "ls" > not_working_test.sh
+
+# Create directories
+mkdir directory
 
 # Test case: Ensure pipex takes exactly 5 inputs
 run_test "Test case: Ensure pipex takes exactly 5 inputs" "./pipex 1 2 3"
@@ -148,5 +151,17 @@ run_test "Versus the terminal" "< input ls | ./permissions_denied_test.sh > outp
 run_test "Extreme test 7: Can you handle executables not located within the path env variable that also do not work with execve?" "./pipex input ls ./not_working_test.sh  output" "output"
 run_test "Versus the terminal" "< input ls | ./not_working_test.sh > output2" "output2"
 echo "Thats it for all the extreme cases. Now lets handle an environment that does not contain the PATH variable!"
+
+# Extreme test 8: Can you handle being given directories instead of executables?
+run_test "Extreme test 8: Can you handle being given directories instead of executables?" "./pipex input ./directory ./directory output"
+run_test "Versus the terminal" "< input ./directory | ./directory > output2"
+
+# Extreme test 9: Can you handle when the given commands are empty?
+run_test "Extreme test 9: Can you handle when the given commands are empty?" "./pipex input '' '' output"
+run_test "Versus the terminal" "< input '' | '' > output"
+
+# Extreme test 10: Can you handle when everything is empty?
+run_test "Extreme test 10: Can you handle when everything is empty?" "./pipex '' '' '' ''"
+run_test "Versus the terminal" "< '' '' | '' > ''"
 # Clean up temporary files
-rm -f input not_working_input output output2 not_working_output output3 output4 test.sh not_working_test.sh permissions_denied_test.sh
+rm -Rf input not_working_input output output2 not_working_output output3 output4 test.sh not_working_test.sh permissions_denied_test.sh directory
