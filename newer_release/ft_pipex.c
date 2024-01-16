@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 12:54:37 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/16 17:57:00 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/16 18:13:24 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,30 @@ static void	forker_function(t_handler *message, char **env)
 	}
 	close(p_fd[0]);
 	close(p_fd[1]);
-	ft_freeing_message(message);
+}
+
+void	waiting_function(t_handler *message)
+{
+	int	status;
+
+	if (message->in_error != 1)
+	{
+		if (waitpid(message.pid_one, &status, 0) == -1)
+			exit_handler(3, &message);
+		if (WIFEXITED(status) && WEXITSTATUS(status) == EXIT_FAILURE)
+			ft_printf("pipex: exec format error: %s\n",
+				message->function_commands_one[0]);
+	}
+	if (message.out_error != 0)
+		return ;
+	if (waitpid(message.pid_two, &status, 0) == -1)
+		exit_handler(3, &message);
+	if (WIFEXITED(status) && WEXITSTATUS(status) == EXIT_FAILURE)
+	{
+		ft_printf("pipex: exec format error: %s\n",
+			message->function_commands_two[0]);
+		message->out_error = 126;
+	}
 }
 
 int	main(int argc, char *argv[], char **env)
@@ -97,15 +120,6 @@ int	main(int argc, char *argv[], char **env)
 	message_handler(argv, env, &message);
 	forker_function(&message, env);
 	waiting_function(&message);
-	if (waitpid(message.pid_one, &status, 0) == -1)
-	{
-		exit_handler(3, &message);
-	}
-	if (message.out_error != 0)
-		return (message.out_error);
-	if (waitpid(message.pid_two, &status, 0) == -1)
-	{
-		exit_handler(3, &message);
-	}
-	return (0);
+	ft_freeing_message(message);
+	return (message.out_error);
 }
