@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 12:09:15 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/16 17:52:54 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/17 10:15:51 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void	function_path_maker(char **env, t_handler *message)
 		path_error_handler(message->function_commands_one[0], message, 1);
 	else if ((message->path_error == 0 && message->in_error != 1))
 		find_path(message->function_commands_one[0], env, message, 0);
-	if (message->path_error == 4)
+	else if (message->path_error == 4)
 		path_error_handler(message->function_commands_one[0], message, 3);
 	if (!(message->path[0]))
 		exit_handler(4, message);

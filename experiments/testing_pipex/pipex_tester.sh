@@ -54,12 +54,14 @@ touch output output2 not_working_output
 chmod 000 not_working_output
 
 # Create executable files
-touch test.sh not_working_test.sh permissions_denied_test.sh
+touch test.sh not_working_test.sh permissions_denied_test.sh not_working
 chmod 777 test.sh
 chmod 777 not_working_test.sh
+chmod 777 not_working
 echo "#!/bin/bash" > test.sh
 echo "ls" >> test.sh
 echo "ls" > not_working_test.sh
+echo -e "\x00\x00\x00\x00\x00\x00\x00\x00" > not_working
 
 # Create directories
 mkdir directory
@@ -163,5 +165,9 @@ run_test "Versus the terminal" "< input '' | '' > output"
 # Extreme test 10: Can you handle when everything is empty?
 run_test "Extreme test 10: Can you handle when everything is empty?" "./pipex '' '' '' ''"
 run_test "Versus the terminal" "< '' '' | '' > ''"
+
+# Extreme test 11: Can you handle a not working executable file?
+run_test "Extreme test 11: Can you handle a not working executable file?" "./pipex input not_working not_working output"
+run_test "Versus the terminal" "< input not_working | not_working > output"
 # Clean up temporary files
 rm -Rf input not_working_input output output2 not_working_output output3 output4 test.sh not_working_test.sh permissions_denied_test.sh directory
