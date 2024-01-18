@@ -6,20 +6,11 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 11:54:16 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/17 10:43:04 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/18 14:19:46 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_pipex.h"
-
-static void	initialize_message_handler(t_handler *message)
-{
-	message->fd_in = 0;
-	message->fd_out = 0;
-	message->in_error = 0;
-	message->out_error = 0;
-	message->path_error = 0;
-}
 
 static void	message_opener(char **argv, t_handler *message)
 {
@@ -70,9 +61,11 @@ void	dir_check(t_handler *message, char *command, int in_out)
 
 void	message_handler(char **argv, char **env, t_handler *message)
 {
-	initialize_message_handler(message);
 	message_opener(argv, message);
 	dir_check(message, message->function_commands_one[0], 1);
 	dir_check(message, message->function_commands_two[0], 2);
-	function_path_maker(env, message);
+	if (message->in_error == 0)	
+		path_maker(env, message, message->function_commands_one[0], 0);
+	if (message->out_error == 0)	
+		path_maker(env, message, message->function_commands_two[0], 1);
 }

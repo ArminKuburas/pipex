@@ -6,25 +6,28 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 09:10:28 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/17 10:45:39 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/18 14:37:26 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_pipex.h"
 
-void	ft_free_substrings(char ***arr_str)
+void	ft_free_substrings(char **arr_str)
 {
 	int	i;
 
 	i = 0;
-	while ((*arr_str)[i])
+	while (arr_str[i] != NULL)
 	{
-		free((*arr_str)[i]);
-		(*arr_str[i]) = NULL;
+		free(arr_str[i]);
+		arr_str[i] = NULL;
 		i++;
 	}
-	free(*arr_str);
-	(*arr_str) = NULL;
+	if (arr_str != NULL)
+	{
+		free(arr_str);
+		arr_str = NULL;
+	}
 }
 
 void	path_error_handler(char *function, t_handler *message, int type)
@@ -82,17 +85,17 @@ void	in_error_handler(int p_fd[])
 
 void	ft_freeing_message(t_handler *message)
 {
-	if (message->function_commands_one)
+	if (message->function_commands_one != NULL)
 	{
-		if (message->function_commands_one[0])
-			ft_free_substrings(&(message->function_commands_one));
+		if (message->function_commands_one[0] !=NULL)
+			ft_free_substrings(message->function_commands_one);
 	}
-	if (message->function_commands_two)
+	if (message->function_commands_two != NULL)
 	{
-		if (message->function_commands_two[0])
-			ft_free_substrings(&(message->function_commands_two));
+		if (message->function_commands_two[0] != NULL)
+			ft_free_substrings(message->function_commands_two);
 	}
-	if (message->path[0])
+	if (message->path[0] != NULL)
 	{
 		free(message->path[0]);
 		message->path[0] = NULL;

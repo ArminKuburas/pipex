@@ -1,7 +1,7 @@
 NAME = pipex
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address
 MAKE = make bonus
 
 LIBFTDIR = libft

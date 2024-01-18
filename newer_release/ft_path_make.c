@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 12:09:15 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/17 10:15:51 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/18 14:16:49 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	path_helper(char **all_paths, t_handler *message, int in_out, char *funct)
 			return (1);
 		free (message->path[in_out]);
 		if (message->path_error == 1 && in_out == 0)
-			return (2);
+			path_error_handler(funct, message, 1);
 		if (message->path_error == 1 && in_out == 1)
 			path_error_handler(funct, message, 2);
 		i++;
@@ -98,40 +98,42 @@ void	find_path(char *function, char **env, t_handler *message, int in_out)
 		return ;
 	}
 	all_paths = ft_split(path_str, ':');
+	if (!all_paths)
+		exit_handler(4, message);
 	helper_value = path_helper(all_paths, message, in_out, function);
 	if (helper_value == 1)
 		return ;
 	else if (helper_value == 2)
-	{
-		path_error_handler(function, message, 1);
 		return ;
-	}
 	else if (helper_value == 0)
 		message->path_error = 4;
 }
 
-void	function_path_maker(char **env, t_handler *message)
+void	path_maker(char **env, t_handler *message, char *command, int type)
 {
-	handle_access(message->function_commands_one[0], message);
-	if (message->path_error == 2 && message->in_error != 1)
-		message->path[0] = ft_strdup(message->function_commands_one[0]);
+	handle_access(command, message);
+	if (message->path_error == 2)
+	{
+		message->path[type] = ft_strdup(command);
+		if (!(message->path[type]))
+			exit_handler(4, message);
+	}
 	else if (message->path_error == 1)
-		path_error_handler(message->function_commands_one[0], message, 1);
-	else if ((message->path_error == 0 && message->in_error != 1))
-		find_path(message->function_commands_one[0], env, message, 0);
-	else if (message->path_error == 4)
-		path_error_handler(message->function_commands_one[0], message, 3);
-	if (!(message->path[0]))
-		exit_handler(4, message);
-	handle_access(message->function_commands_two[0], message);
-	if (message->path_error == 2 && message->out_error == 0)
-		message->path[1] = ft_strdup(message->function_commands_two[0]);
-	else if (message->path_error == 1)
-		path_error_handler(message->function_commands_two[0], message, 2);
-	else if (message->path_error != 2 && message->out_error == 0)
-		find_path(message->function_commands_two[0], env, message, 1);
+	{
+		if (type == 0 && message->in_error == 0)
+			path_error_handler(command, message, 1);
+		else if (type == 1 && message->out_error == 0)
+			path_error_handler(command, message, 2);
+		return ;
+	}
+	else if (message->path_error == 0)
+		find_path(command, env, message, type);
 	if (message->path_error == 4)
-		path_error_handler(message->function_commands_two[0], message, 4);
-	if (!(message->path[1]))
-		exit_handler(4, message);
+	{
+		if (type == 0 && message->in_error == 0)
+			path_error_handler(command, message, 3);
+		else if (type == 1 && message->out_error == 0)
+			path_error_handler(command, message, 4);
+		return ;
+	}
 }

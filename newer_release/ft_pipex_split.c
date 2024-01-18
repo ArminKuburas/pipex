@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 13:28:10 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/16 17:57:17 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/18 12:06:25 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ char	**ft_pipex_split(const char *s, t_handler *message)
 		result[j] = extract_word(s, &i);
 		if (!result[j])
 		{
-			ft_free_substrings(&result);
+			ft_free_substrings(result);
 			exit_handler(4, message);
 		}
 		j++;
