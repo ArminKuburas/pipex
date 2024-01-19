@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 12:54:37 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/18 14:39:52 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/19 05:26:32 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ static void	child_one(t_handler *message, int p_fd[], char **env)
 	close(p_fd[0]);
 	free(message->path[1]);
 	message->path[1] = NULL;
+	ft_free_substrings(message->function_commands_two);
 	ft_execute(message->path[0], env, message->function_commands_one);
 }
 
@@ -52,6 +53,7 @@ static void	child_two(t_handler *message, int p_fd[], char **env)
 	close(p_fd[1]);
 	free(message->path[0]);
 	message->path[0] = NULL;
+	ft_free_substrings(message->function_commands_one);
 	ft_execute(message->path[1], env, message->function_commands_two);
 }
 
@@ -93,7 +95,7 @@ void	waiting_function(t_handler *message)
 				message->function_commands_one[0]);
 		}
 	}
-	if (message->out_error == 0)
+	if (message->out_error != 0)
 		return ;
 	if (waitpid(message->pid_two, &status, 0) == -1)
 		exit_handler(3, message);

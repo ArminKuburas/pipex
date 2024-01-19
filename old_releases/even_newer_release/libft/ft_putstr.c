@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 13:25:09 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/17 10:27:51 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/19 05:21:09 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ int	ft_putstr(char *string)
 	result = 0;
 	if (string == NULL)
 	{
-		write (2, "(null)", 6);
-		return (6);
+		return (0);
 	}
 	i = 0;
 	while (string[i])

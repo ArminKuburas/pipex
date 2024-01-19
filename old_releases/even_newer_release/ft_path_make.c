@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 12:09:15 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/18 14:16:49 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/19 05:06:40 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int	path_helper(char **all_paths, t_handler *message, int in_out, char *funct)
 		if (message->path_error == 2)
 			return (1);
 		free (message->path[in_out]);
+		message->path[in_out] = NULL;
 		if (message->path_error == 1 && in_out == 0)
 			path_error_handler(funct, message, 1);
 		if (message->path_error == 1 && in_out == 1)
@@ -101,6 +102,7 @@ void	find_path(char *function, char **env, t_handler *message, int in_out)
 	if (!all_paths)
 		exit_handler(4, message);
 	helper_value = path_helper(all_paths, message, in_out, function);
+	ft_free_substrings(all_paths);
 	if (helper_value == 1)
 		return ;
 	else if (helper_value == 2)
