@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 12:54:37 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/19 11:53:33 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/20 00:41:47 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,32 +79,19 @@ static void	forker_function(t_handler *message, char **env)
 	close(p_fd[1]);
 }
 
-void	waiting_function(t_handler *message)
+int	waiting_function(t_handler *message, pid_t pid, char *command)
 {
 	int	status;
 
-	if (message->in_error == 0)
-	{
-		if (waitpid(message->pid_one, &status, 0) == -1)
-		{
-			exit_handler(3, message);
-		}
-		if (WIFEXITED(status) && WEXITSTATUS(status) == EXIT_FAILURE)
-		{
-			ft_printf("pipex: exec format error: %s\n",
-				message->function_commands_one[0]);
-		}
-	}
-	if (message->out_error != 0)
-		return ;
-	if (waitpid(message->pid_two, &status, 0) == -1)
+	if (waitpid(pid, &status, 0) == -1)
 		exit_handler(3, message);
 	if (WIFEXITED(status) && WEXITSTATUS(status) == EXIT_FAILURE)
 	{
-		ft_printf("pipex: exec format error: %s\n",
-			message->function_commands_two[0]);
-		message->out_error = 126;
+		ft_printf("pipex: exec format error: %s\n", command);
+		return (1);
 	}
+	else
+		return (0);
 }
 
 int	main(int argc, char *argv[], char **env)
@@ -122,9 +109,15 @@ int	main(int argc, char *argv[], char **env)
 	message.function_commands_one = ft_pipex_split(argv[2], &message);
 	message.function_commands_two = ft_pipex_split(argv[3], &message);
 	message_handler(argv, env, &message);
-	ft_printf("These are the paths and commands: path one %s two %s commands one %s and commands two %s\n", message.path[0], message.path[1], message.function_commands_one[0], message.function_commands_two[0]);
 	forker_function(&message, env);
-	waiting_function(&message);
+	if (message.in_error == 0)
+		status = waiting_function(&message, message.pid_one,
+				message.function_commands_one[0]);
+	if (message.out_error == 0)
+		status = waiting_function(&message, message.pid_two,
+				message.function_commands_two[0]);
+	if (status == 1)
+		message.out_error = 126;
 	ft_freeing_message(&message);
 	return (message.out_error);
 }

@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:24:21 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/18 14:17:42 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/20 01:07:49 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,6 @@ void	message_handler(char **argv, char **env, t_handler *message);
 void	path_error_handler(char *function, t_handler *message, int type);
 void	ft_freeing_message(t_handler *message);
 void	handle_access(char *function, t_handler *message);
+int		pipex_strchr(const char *s, int c);
 
 #endif

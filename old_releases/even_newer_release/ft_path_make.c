@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 12:09:15 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/19 12:25:09 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/20 01:06:31 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,15 @@ static char	*get_path(char *path_name, char **env, t_handler *message)
 
 void	handle_access(char *function, t_handler *message)
 {
+	if (pipex_strchr("./~", function[0]) != 0)
+	{
+		message->path_error = 0;
+		return ;
+	}
 	if (access(function, F_OK) == 0)
 	{
-		printf("inside of handle access. printing the function %s\n", function);
 		if (access(function, X_OK) == 0)
 		{
-			printf("inside of handle access. printing the function X_OK somehow passed.  %s\n", function);
 			message->path_error = 2;
 			return ;
 		}
@@ -70,7 +73,6 @@ int	path_helper(char **all_paths, t_handler *message, int in_out, char *funct)
 		if (!(message->path[in_out]))
 			exit_handler(4, message);
 		free(test_path);
-		ft_printf("Lets see what the path is inside of path helper %s", message->path[in_out]);
 		handle_access(message->path[in_out], message);
 		if (message->path_error == 2)
 			return (1);
@@ -119,7 +121,6 @@ void	path_maker(char **env, t_handler *message, char *command, int type)
 	handle_access(command, message);
 	if (message->path_error == 2)
 	{
-		ft_printf("inside of path maker. Inside of somehow ft_strdup of the command??\n");
 		message->path[type] = ft_strdup(command);
 		if (!(message->path[type]))
 			exit_handler(4, message);
@@ -142,5 +143,4 @@ void	path_maker(char **env, t_handler *message, char *command, int type)
 			path_error_handler(command, message, 4);
 		return ;
 	}
-	ft_printf("Past the last if statement somehow\n");
 }
