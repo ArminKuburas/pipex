@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 12:54:37 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/19 05:26:32 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/19 11:53:33 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ int	main(int argc, char *argv[], char **env)
 	message.function_commands_one = ft_pipex_split(argv[2], &message);
 	message.function_commands_two = ft_pipex_split(argv[3], &message);
 	message_handler(argv, env, &message);
+	ft_printf("These are the paths and commands: path one %s two %s commands one %s and commands two %s\n", message.path[0], message.path[1], message.function_commands_one[0], message.function_commands_two[0]);
 	forker_function(&message, env);
 	waiting_function(&message);
 	ft_freeing_message(&message);

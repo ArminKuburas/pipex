@@ -1,41 +1,34 @@
 NAME = pipex
 
 CC = cc
-CFLAGS = -Wall -Wextra
+CFLAGS = -Wall -Wextra -Werror
 MAKE = make bonus
 
 LIBFTDIR = libft
-OBJDIR = object_files
 
-LIBFT = -L$(LIBFTDIR) -lft
-
+LIBFT = $(LIBFTDIR)/libft.a
 SRCS = 	ft_pipex_split.c \
 		ft_pipex_utils.c \
 		ft_pipex.c \
 		ft_message_handler.c \
 		ft_path_make.c
 
-OBJS = $(addprefix $(OBJDIR)/,$(SRCS:.c=.o))
+OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
 $(NAME): $(OBJS) $(LIBFT)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
 $(LIBFT):
 	@$(MAKE) -C $(LIBFTDIR)
-$(OBJDIR)/%.o: %.c | $(OBJDIR)
+%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(OBJDIR):
-	mkdir -p $(OBJDIR)
-
 clean:
-	rm -rf $(OBJDIR)
-fclean: clean
-	rm -rf $(NAME)
-libft_clean:
 	make clean -C $(LIBFTDIR)
-libft_fclean:
+	rm -rf $(OBJS)
+fclean: clean
 	make fclean -C $(LIBFTDIR)
+	rm -rf $(NAME)
 
 re: fclean all
-.PHONY: all clean fclean re libft_clean libft_fclean
+.PHONY: all clean fclean re
