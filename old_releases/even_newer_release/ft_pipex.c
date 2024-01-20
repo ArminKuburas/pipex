@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 12:54:37 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/20 00:41:47 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/20 03:28:02 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,6 @@ int	main(int argc, char *argv[], char **env)
 		exit(1);
 	}
 	ft_bzero(&message, sizeof(t_handler));
-	message.function_commands_one = ft_pipex_split(argv[2], &message);
-	message.function_commands_two = ft_pipex_split(argv[3], &message);
 	message_handler(argv, env, &message);
 	forker_function(&message, env);
 	if (message.in_error == 0)

@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 11:54:16 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/18 14:19:46 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/20 03:44:04 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,20 @@ void	dir_check(t_handler *message, char *command, int in_out)
 void	message_handler(char **argv, char **env, t_handler *message)
 {
 	message_opener(argv, message);
-	dir_check(message, message->function_commands_one[0], 1);
-	dir_check(message, message->function_commands_two[0], 2);
-	if (message->in_error == 0)	
+	if (argv[2][0] != '\0')
+		message->function_commands_one = ft_pipex_split(argv[2], message);
+	else
+		path_error_handler(argv[2], message, 1);
+	if (argv[3][0] != '\0')
+		message->function_commands_two = ft_pipex_split(argv[3], message);
+	else
+		path_error_handler(argv[3], message, 2);
+	if (message->in_error == 0)
+		dir_check(message, message->function_commands_one[0], 1);
+	if (message->out_error == 0)
+		dir_check(message, message->function_commands_two[0], 2);
+	if (message->in_error == 0)
 		path_maker(env, message, message->function_commands_one[0], 0);
-	if (message->out_error == 0)	
+	if (message->out_error == 0)
 		path_maker(env, message, message->function_commands_two[0], 1);
 }
