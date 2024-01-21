@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 17:36:57 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/20 01:07:30 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/20 18:53:08 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,19 @@ int	pipex_strchr(const char *s, int c)
 		s++;
 	}
 	return (1);
+}
+
+int	waiting_function(t_handler *message, pid_t pid, char *command)
+{
+	int	status;
+
+	if (waitpid(pid, &status, 0) == -1)
+		exit_handler(3, message);
+	if (WIFEXITED(status) && WEXITSTATUS(status) == EXIT_FAILURE)
+	{
+		ft_printf("pipex: exec format error: %s\n", command);
+		return (1);
+	}
+	else
+		return (0);
 }

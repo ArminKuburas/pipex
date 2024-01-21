@@ -12,7 +12,7 @@ SRCS = 	ft_pipex_split.c \
 		ft_pipex.c \
 		ft_message_handler.c \
 		ft_path_make.c \
-		ft_pipex_strchr.c
+		ft_pipex_additional_utils.c
 
 OBJS = $(SRCS:.c=.o)
 
