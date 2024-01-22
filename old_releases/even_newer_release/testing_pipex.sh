@@ -66,6 +66,11 @@ echo -e "\x00\x00\x00\x00\x00\x00\x00\x00" > not_working
 # Create directories
 mkdir directory
 
+# Make the library
+
+make re
+make clean
+
 # Test case: Ensure pipex takes exactly 5 inputs
 run_test "Test case: Ensure pipex takes exactly 5 inputs" "./pipex 1 2 3"
 run_test "Test case: Ensure pipex takes exactly 5 inputs" "./pipex 1 2 3 4 5"
@@ -152,7 +157,6 @@ run_test "Versus the terminal" "< input ls | ./permissions_denied_test.sh > outp
 # Extreme test 7: Can you handle executables not located within the path env variable that also do not work with execve?
 run_test "Extreme test 7: Can you handle executables not located within the path env variable that also do not work with execve?" "./pipex input ls ./not_working_test.sh  output" "output"
 run_test "Versus the terminal" "< input ls | ./not_working_test.sh > output2" "output2"
-echo "Thats it for all the extreme cases. Now lets handle an environment that does not contain the PATH variable!"
 
 # Extreme test 8: Can you handle being given directories instead of executables?
 run_test "Extreme test 8: Can you handle being given directories instead of executables?" "./pipex input ./directory ./directory output"
@@ -167,7 +171,14 @@ run_test "Extreme test 10: Can you handle when everything is empty?" "./pipex ''
 run_test "Versus the terminal" "< '' '' | '' > ''"
 
 # Extreme test 11: Can you handle a not working executable file?
-run_test "Extreme test 11: Can you handle a not working executable file?" "./pipex input not_working not_working output"
-run_test "Versus the terminal" "< input not_working | not_working > output"
+run_test "Extreme test 11: Can you handle a not working executable file?" "./pipex input ./not_working ./not_working output"
+run_test "Versus the terminal" "< input ./not_working | ./not_working > output"
+
+# Extreme test 12: Can you handle a file  that you do have access to and is executable but that does not have the path to it but instead is inside of the same directory?
+run_test "# Extreme test 12: Can you handle a file  that you do have access to and is executable but that does not have the path to it but instead is inside of the same directory?" "./pipex input test.sh test.sh output" "output"
+run_test "Versus the terminal" "< input test.sh | test.sh > output2" "output2" 
+
+echo "Thats it for all the extreme cases. Now lets handle an environment that does not contain the PATH variable!"
 # Clean up temporary files
 rm -Rf input not_working_input output output2 not_working_output output3 output4 test.sh not_working_test.sh permissions_denied_test.sh directory
+make fclean

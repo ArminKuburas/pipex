@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 09:10:28 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/19 05:19:35 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/22 07:01:36 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	ft_freeing_message(t_handler *message)
 {
 	if (message->function_commands_one != NULL)
 	{
-		if (message->function_commands_one[0] !=NULL)
+		if (message->function_commands_one[0] != NULL)
 			ft_free_substrings(message->function_commands_one);
 	}
 	if (message->function_commands_two != NULL)

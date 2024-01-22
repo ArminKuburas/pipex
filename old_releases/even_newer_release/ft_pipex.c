@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 12:54:37 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/20 18:52:54 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/22 07:22:34 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ int	main(int argc, char *argv[], char **env)
 		ft_putstr_fd("./pipex infile cmd cmd outfile\n", 2);
 		exit(1);
 	}
-	printf("argv[2]: %s\n", argv[2]);
 	ft_bzero(&message, sizeof(t_handler));
 	message_handler(argv, env, &message);
 	forker_function(&message, env);
