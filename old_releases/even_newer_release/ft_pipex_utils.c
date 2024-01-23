@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 09:10:28 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/22 07:01:36 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/23 08:43:24 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ void	path_error_handler(char *function, t_handler *message, int type)
 {
 	if (type == 1 && message->in_error != 1)
 	{
-		ft_printf("pipex: %s: %s\n", strerror(13), function);
+		ft_printf("pipex: permission denied: %s\n", function);
 		message->in_error = 1;
 	}
 	else if (type == 2 && message->out_error == 0)
 	{
-		ft_printf("pipex: %s: %s\n", strerror(13), function);
+		ft_printf("pipex: permission denied: %s\n", function);
 		message->out_error = 126;
 	}
 	else if (type == 3 && message->in_error != 1)
@@ -105,4 +105,8 @@ void	ft_freeing_message(t_handler *message)
 		free(message->path[1]);
 		message->path[1] = NULL;
 	}
+	if (message->fd_in != -1)
+		close(message->fd_in);
+	if (message->fd_out != -1)
+		close(message->fd_out);
 }

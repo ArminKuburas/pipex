@@ -6,7 +6,7 @@
 /*   By: akuburas <akuburas@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 12:54:37 by akuburas          #+#    #+#             */
-/*   Updated: 2024/01/22 07:22:34 by akuburas         ###   ########.fr       */
+/*   Updated: 2024/01/23 09:12:51 by akuburas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ static void	child_one(t_handler *message, int p_fd[], char **env)
 	free(message->path[1]);
 	message->path[1] = NULL;
 	ft_free_substrings(message->function_commands_two);
+	if (message->fd_out != -1)
+		close(message->fd_out);
 	ft_execute(message->path[0], env, message->function_commands_one);
 }
 
@@ -54,6 +56,8 @@ static void	child_two(t_handler *message, int p_fd[], char **env)
 	free(message->path[0]);
 	message->path[0] = NULL;
 	ft_free_substrings(message->function_commands_one);
+	if (message->fd_in != -1)
+		close(message->fd_in);
 	ft_execute(message->path[1], env, message->function_commands_two);
 }
 

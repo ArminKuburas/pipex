@@ -21,3 +21,6 @@ I learnt a lot from this project. As stated earlier it was primarily the use of 
 2.  The second important thing I learnt about is processes and how they function up to some point anyway.
      - For example I use pid_t a lot which is a integer type used to represent process IDs. This way I was able to keep track of each process and use functions such as waitpid to wait until specific processes finished their tasks.
 3.  The main and most important external functions I used were  
+
+
+valgrind --track-fds=yes  --leak-check=full --show-leak-kinds=all -s
